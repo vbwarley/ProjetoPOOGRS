@@ -7,6 +7,7 @@ import negocios.Requisicao;
 import negocios.TipoRequisicao;
 import negocios.Usuario;
 
+// Esta classe é Banco
 public class Banco {
 	
 	private Banco instance = new Banco();
