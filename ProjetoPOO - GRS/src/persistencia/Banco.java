@@ -60,8 +60,16 @@ public class Banco {
 	public Usuario consultarUsuario(int codigo) {
 		manager.getTransaction().begin();
 		Usuario u = manager.find(Usuario.class, codigo);
-		
+		manager.getTransaction().commit();
 		return u;
+	}
+	
+	public String ExcluirUsuario(int codigo) {
+		manager.getTransaction().begin();
+		manager.remove(getInstance().consultarUsuario(codigo));
+		manager.getTransaction().commit();
+		
+		return "Usuario escluído com sucesso!";
 	}
 	
 	public Collection<Usuario> consultarUsuarios(String nome) {

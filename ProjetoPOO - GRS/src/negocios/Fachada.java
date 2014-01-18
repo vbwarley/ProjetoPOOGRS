@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
+
 import persistencia.Banco;
 
 public class Fachada {
@@ -58,20 +59,44 @@ public class Fachada {
 	}
 	
 	public String criarUsuario(String nome, String departamento) {
-		return null;
+		Usuario usuario;
+		
+		if (departamento.equals("CTI")){
+			usuario = new Administrador();
+		} else {
+			usuario = new Cliente();
+		}
+		
+		String mensagem = usuario.salvarDados();;
+		return mensagem;
 	}
 	
 	// adicionando novo m�todo - teste
 	private Usuario consultarUsuario(int codigo) {
+		
 		return Banco.getInstance().consultarUsuario(codigo);
 	}
 	
 	public ArrayList<String> consultarUsuario(String nomeUsuario) {
-		return null;
+		
+		ArrayList<Usuario> array = new ArrayList<Usuario>();
+		
+		array = (ArrayList<Usuario>) Banco.getInstance().consultarUsuarios(nomeUsuario);
+		
+		ArrayList<String> informacoes = new ArrayList<String>();
+		
+		for (int i = 0; i < Banco.getInstance().consultarUsuarios(nomeUsuario).size(); i++){
+			informacoes.add(array.get(i).toString());
+		}
+		
+		
+		return informacoes;
 	}
 	
 	public String excluirUsuario(int codigoUsuario) {
-		return null;
+		
+		return Banco.getInstance().ExcluirUsuario(codigoUsuario);
+		
 	}
 	
 	public String atualizarUsuario(String nome, String departamento) {
