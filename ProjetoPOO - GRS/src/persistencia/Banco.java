@@ -13,7 +13,7 @@ import negocios.Requisicao;
 import negocios.TipoRequisicao;
 import negocios.Usuario;
 
-// Esta classe � Banco
+// Esta classe é Banco
 public class Banco {
 	
 	private static Banco instance = new Banco();
@@ -28,7 +28,7 @@ public class Banco {
 		return instance;
 	}
 	
-	// analisar este m�todo depois
+	// analisar este método depois
 	public Usuario autenticacao(String nomeUsuario, String senha) {
 		
 		Query query = manager.createQuery("SELECT u FROM Usuario u WHERE nome = '" + nomeUsuario + "' AND "
@@ -56,7 +56,7 @@ public class Banco {
 		return null;
 	}
 	
-	// novo m�todo adicionado
+	// novo método adicionado
 	public Usuario consultarUsuario(int codigo) {
 		manager.getTransaction().begin();
 		Usuario u = manager.find(Usuario.class, codigo);
@@ -68,7 +68,7 @@ public class Banco {
 		return null;
 	}
 	
-	// mudan�a no parametro
+	// mudança no parametro
 	// analisar
 	public Collection<Requisicao> consultarRequisicoes(Date data) {
 		
