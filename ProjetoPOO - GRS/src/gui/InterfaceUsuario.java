@@ -150,17 +150,32 @@ public class InterfaceUsuario {
 		String nome = JOptionPane.showInputDialog("Nome: ").toString();
 		String departamento = JOptionPane.showInputDialog("Departamento: ").toString();
 		
-		Fachada.getInstance().criarUsuario(nome, departamento);
+		JOptionPane.showMessageDialog(null, Fachada.getInstance().criarUsuario(nome, departamento));
 	}
 		
 	public static void consultarUsuario()
 	{
+		String nome = JOptionPane.showInputDialog("Digite o nome do usuario a ser consultado: ").toString();
+		
+		String usuarios = "";
+		
+		for (int i = 0; i < Fachada.getInstance().consultarUsuario(nome).size(); i++){
 			
+			usuarios = Fachada.getInstance().consultarUsuario(nome).get(i) + "\n";
+			
+		}
+		
+		JOptionPane.showMessageDialog(null, "Usuarios encontrados com esse nome: \n" + usuarios);
 	}
 		
 	public static void excluirUsuario()
 	{
-			
+		String codigoS = JOptionPane.showInputDialog("Digite o codigo do usuario a ser excluído: ");
+		
+		int codigo = Integer.parseInt(codigoS);
+		
+		JOptionPane.showMessageDialog(null, Fachada.getInstance().excluirUsuario(codigo));
+		
 	}
 		
 	public static void atualizarUsuario()
