@@ -47,32 +47,41 @@ public class Banco {
 		manager.getTransaction().begin();
 		manager.persist(usuario);
 		manager.getTransaction().commit();
-		
+		// rever a utilização dessa mensagem
 		String mensagem = "Usuário cadastrado com sucesso!";
 		return mensagem;
 	}
 	
 	public String salvarRequisicao(Requisicao requisicao) {
+		// impelementado
+		manager.getTransaction().begin();
+		manager.persist(requisicao);
+		manager.getTransaction().commit();
+		
 		return null;
 	}
 	
 	// novo método adicionado
 	public Usuario consultarUsuario(int codigo) {
+		
+		// não precisa abrir conexão
 		manager.getTransaction().begin();
 		Usuario u = manager.find(Usuario.class, codigo);
+		// nem commitar
 		manager.getTransaction().commit();
 		return u;
 	}
 	
-	public String ExcluirUsuario(int codigo) {
+	public String excluirUsuario(int codigo) {
 		manager.getTransaction().begin();
 		manager.remove(getInstance().consultarUsuario(codigo));
 		manager.getTransaction().commit();
-		
-		return "Usuario escluído com sucesso!";
+		// e se o usuario não foi excluído? se deu erro, não se deve retornar essa mensagem
+		return "Usuario excluído com sucesso!";
 	}
 	
 	public Collection<Usuario> consultarUsuarios(String nome) {
+		// falta implementar
 		return null;
 	}
 	
@@ -87,6 +96,7 @@ public class Banco {
 	}
 	
 	public Collection<Requisicao> consultarRequisicoes(TipoRequisicao tipoRequisicao) {
+		// falta implementar
 		return null;
 	}
 	

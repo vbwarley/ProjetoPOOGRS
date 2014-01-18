@@ -95,7 +95,7 @@ public class Fachada {
 	
 	public String excluirUsuario(int codigoUsuario) {
 		
-		return Banco.getInstance().ExcluirUsuario(codigoUsuario);
+		return Banco.getInstance().excluirUsuario(codigoUsuario);
 		
 	}
 	
