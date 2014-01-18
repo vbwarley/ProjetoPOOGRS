@@ -13,7 +13,7 @@ import negocios.Requisicao;
 import negocios.TipoRequisicao;
 import negocios.Usuario;
 
-// Esta classe é Banco
+// Esta classe ï¿½ Banco
 public class Banco {
 	
 	private static Banco instance = new Banco();
@@ -28,7 +28,7 @@ public class Banco {
 		return instance;
 	}
 	
-	// analisar este método depois
+	// analisar este mï¿½todo depois
 	public Usuario autenticacao(String nomeUsuario, String senha) {
 		
 		Query query = manager.createQuery("SELECT u FROM Usuario u WHERE nome = '" + nomeUsuario + "' AND "
@@ -42,14 +42,20 @@ public class Banco {
 	}
 	
 	public String salvarUsuario(Usuario usuario) {
-		return null;
+		
+		manager.getTransaction().begin();
+		manager.persist(usuario);
+		manager.getTransaction().commit();
+		
+		String mensagem = "UsuÃ¡rio cadastrado com sucesso!";
+		return mensagem;
 	}
 	
 	public String salvarRequisicao(Requisicao requisicao) {
 		return null;
 	}
 	
-	// novo método adicionado
+	// novo mï¿½todo adicionado
 	public Usuario consultarUsuario(int codigo) {
 		manager.getTransaction().begin();
 		Usuario u = manager.find(Usuario.class, codigo);
@@ -61,7 +67,7 @@ public class Banco {
 		return null;
 	}
 	
-	// mudança no parametro
+	// mudanï¿½a no parametro
 	// analisar
 	public Collection<Requisicao> consultarRequisicoes(Date data) {
 		
