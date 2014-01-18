@@ -58,16 +58,7 @@ public class Fachada {
 	}
 	
 	public String criarUsuario(String nome, String departamento) {
-		Usuario usuario;
-		
-		if (departamento.equals("CTI")){
-			usuario = new Administrador();
-		} else {
-			usuario = new Cliente();
-		}
-		
-		String mensagem = usuario.salvarDados();;
-		return mensagem;
+		return null;
 	}
 	
 	// adicionando novo m�todo - teste
