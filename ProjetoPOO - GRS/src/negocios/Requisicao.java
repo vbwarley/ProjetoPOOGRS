@@ -6,15 +6,27 @@ public class Requisicao {
 	private String descricao;
 	private TipoRequisicao tipoRequisicao;
 	private int prazo;
+	// novo atributo/classe 
+	// rever o que colocar: se atributos, se classe
+	//private Status status;
 	private Usuario usuario;
 	
 	public Requisicao() {
 		
 	}
 	
-	public String salvarRequisicao() {
-		return null;
+	// setando tudo de inicio
+	// usuario, novo parametro
+	public Requisicao(String descricao, TipoRequisicao tipoRequisicao, int prazo, Usuario usuario) {
+		this.descricao = descricao;
+		this.tipoRequisicao = tipoRequisicao;
+		this.prazo = prazo;
+		this.usuario = usuario;
 	}
+	
+//	public String salvarRequisicao() {
+//		return null;
+//	}
 	
 	public int getCodigo() {
 		return codigo;
@@ -55,5 +67,14 @@ public class Requisicao {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+	@Override
+	public String toString() {
+		return "Código da requisição: " + codigo + "\nDescricao: " + descricao
+				+ "\nTipo da Requisicao: " + tipoRequisicao + "\nPrazo: " + prazo
+				+ "\nUsuario que requisitou: " + usuario + "\n";
+	}
+	
+	
 	
 }

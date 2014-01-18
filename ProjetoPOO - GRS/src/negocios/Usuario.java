@@ -1,12 +1,26 @@
 package negocios;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import persistencia.Banco;
+
 public abstract class Usuario {
 	private int codigo;
 	private String nome;
 	private String departamento;
 	
+	// novo atributo
+	private Collection<Requisicao> requisicoes = new ArrayList<Requisicao>();
+	
 	public abstract String salvarDados();
 	public abstract String excluirUsuario();
+	
+	// novo método
+	public void enviarRequisicao(Requisicao requisicao) {
+		requisicoes.add(requisicao);
+		Banco.getInstance().salvarRequisicao(requisicao);
+	}
 	
 	public int getCodigo() {
 		return codigo;
@@ -25,8 +39,6 @@ public abstract class Usuario {
 	}
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
-	}
-	
-	
+	}	
 	
 }
