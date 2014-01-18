@@ -20,8 +20,8 @@ public class Fachada {
 		return instance;
 	}
 	
-	// mudança do tipo do segundo parametro - denovo 
-	// adição do ultimo
+	// mudanï¿½a do tipo do segundo parametro - denovo 
+	// adiï¿½ï¿½o do ultimo
 	public String enviarRequisicao(String descricaoRequisicao, int tipoRequisicao, int prazoParaTermino_dias, int codigoUsuario) {
 		Usuario usuario = consultarUsuario(codigoUsuario);
 			
@@ -40,7 +40,7 @@ public class Fachada {
 	
 	}
 	
-	// mudança do tipo do parâmetro e tipo de retorno
+	// mudanï¿½a do tipo do parï¿½metro e tipo de retorno
 	public Collection<String> consultarRequisicoes(int tipoRequisicao) {
 		TipoRequisicao tR;
 		Collection<Requisicao> requisicoes;
@@ -58,10 +58,19 @@ public class Fachada {
 	}
 	
 	public String criarUsuario(String nome, String departamento) {
-		return null;
+		Usuario usuario;
+		
+		if (departamento.equals("CTI")){
+			usuario = new Administrador();
+		} else {
+			usuario = new Cliente();
+		}
+		
+		String mensagem = usuario.salvarDados();;
+		return mensagem;
 	}
 	
-	// adicionando novo método - teste
+	// adicionando novo mï¿½todo - teste
 	private Usuario consultarUsuario(int codigo) {
 		return Banco.getInstance().consultarUsuario(codigo);
 	}

@@ -13,18 +13,18 @@ public class InterfaceUsuario {
 	public static void menuOpcoes() { 
 		
 		
-		// -- a implementação dos campos usuário e senha fica em autenticacao()
-		// lembrar de colocar um opção para cadastrar o administrador -
+		// -- a implementaï¿½ï¿½o dos campos usuï¿½rio e senha fica em autenticacao()
+		// lembrar de colocar um opï¿½ï¿½o para cadastrar o administrador -
 		// ver como fazer isso
 		
-		JOptionPane.showMessageDialog(null, "Olá, <<aqui fica o nome do usuário>>! As opções disponíveis a você encontram-se abaixo: \n");
-		// nesse caso, deve-se utilizar de algum mecanismo que mostre as opções de acordo com o tipo de usuário
-		// OU ter algum outro mecanismo que impeça o usuario (cliente) de utilizar os métodos (polimorfismo?!)
+		JOptionPane.showMessageDialog(null, "Olï¿½, <<aqui fica o nome do usuï¿½rio>>! As opï¿½ï¿½es disponï¿½veis a vocï¿½ encontram-se abaixo: \n");
+		// nesse caso, deve-se utilizar de algum mecanismo que mostre as opï¿½ï¿½es de acordo com o tipo de usuï¿½rio
+		// OU ter algum outro mecanismo que impeï¿½a o usuario (cliente) de utilizar os mï¿½todos (polimorfismo?!)
 		
 		// por enquanto vou generalizar e colocar todas
 		
-		int menuOpcoes = Integer.parseInt(JOptionPane.showInputDialog("1 - Manter requisição\n"
-				+ "2 - Manter usuário\n"
+		int menuOpcoes = Integer.parseInt(JOptionPane.showInputDialog("1 - Manter requisiï¿½ï¿½o\n"
+				+ "2 - Manter usuï¿½rio\n"
 				+ "3 - Vazar ").toString());
 		
 		switch (menuOpcoes) {
@@ -35,7 +35,7 @@ public class InterfaceUsuario {
 			manterUsuario();
 			break;
 		case 3:
-			int opcLogOut = JOptionPane.showConfirmDialog(null, "Você está prestes a deslogar do sistema... Caso queira continuar, selecione a opção \"Yes\".\n");
+			int opcLogOut = JOptionPane.showConfirmDialog(null, "Vocï¿½ estï¿½ prestes a deslogar do sistema... Caso queira continuar, selecione a opï¿½ï¿½o \"Yes\".\n");
 			if (opcLogOut == JOptionPane.YES_OPTION)
 				System.exit(1);
 			else
@@ -49,9 +49,9 @@ public class InterfaceUsuario {
 	
 	public static void manterRequisicao()
 	{
-		int opcaoManterRequisicao = Integer.parseInt(JOptionPane.showInputDialog(null, "\t\tManter Requisição\t\t\n\n"
-				+ "1 - Enviar requisição\n"
-				+ "2 - Consultar requisição\n"
+		int opcaoManterRequisicao = Integer.parseInt(JOptionPane.showInputDialog(null, "\t\tManter Requisiï¿½ï¿½o\t\t\n\n"
+				+ "1 - Enviar requisiï¿½ï¿½o\n"
+				+ "2 - Consultar requisiï¿½ï¿½o\n"
 				+ "3 - Voltar...").toString());	
 		
 		switch (opcaoManterRequisicao) {
@@ -78,37 +78,37 @@ public class InterfaceUsuario {
 		
 		JOptionPane.showMessageDialog(null, "Preencha os seguintes campos:\n");
 		
-		descricao = JOptionPane.showInputDialog("Descricação da requisição: \n").toString();
-		tipoReq = Integer.parseInt(JOptionPane.showInputDialog("Escolha o tipo de requisição: \n" + Fachada.getInstance().getTipoRequisicaoString()).toString());
-		prazo = Integer.parseInt(JOptionPane.showInputDialog("Dê um prazo máximo para o atendimento da requisição: ").toString());
+		descricao = JOptionPane.showInputDialog("Descricaï¿½ï¿½o da requisiï¿½ï¿½o: \n").toString();
+		tipoReq = Integer.parseInt(JOptionPane.showInputDialog("Escolha o tipo de requisiï¿½ï¿½o: \n" + Fachada.getInstance().getTipoRequisicaoString()).toString());
+		prazo = Integer.parseInt(JOptionPane.showInputDialog("Dï¿½ um prazo mï¿½ximo para o atendimento da requisiï¿½ï¿½o: ").toString());
 		
 		codigoUsuario = autenticacao(); // mecanismo para poder setar usuario
 		
 		if (codigoUsuario != -1)
 			Fachada.getInstance().enviarRequisicao(descricao, tipoReq, prazo, codigoUsuario);
 		else 
-			JOptionPane.showMessageDialog(null, "Não foi possível enviar a requisição.");
+			JOptionPane.showMessageDialog(null, "Nï¿½o foi possï¿½vel enviar a requisiï¿½ï¿½o.");
 	}
 		
 	public static void consultarRequisicao()
 	{
 		int opcaoConsulta;
-		opcaoConsulta = Integer.parseInt(JOptionPane.showInputDialog("Escolha uma das opções abaixo: \n"
+		opcaoConsulta = Integer.parseInt(JOptionPane.showInputDialog("Escolha uma das opï¿½ï¿½es abaixo: \n"
 				+ "1 - Data\n"
-				+ "2 - Tipo de requisição").toString());
+				+ "2 - Tipo de requisiï¿½ï¿½o").toString());
 		
 		switch (opcaoConsulta) {
 		case 1: {
 			String data;
 			data = JOptionPane.showInputDialog("Digite a data (yyyy-mm-dd): \n");
 			Fachada.getInstance().consultarRequisicoes(Date.valueOf(data));
-			// falta o resto - chamar metodo mostraVenda, se for útil 
+			// falta o resto - chamar metodo mostraVenda, se for ï¿½til 
 			break;
 			
 		}
 		case 2: {
 			int tipoReq;
-			tipoReq = Integer.parseInt(JOptionPane.showInputDialog("Escolha o tipo de requisição: \n" + Fachada.getInstance().getTipoRequisicaoString()).toString());
+			tipoReq = Integer.parseInt(JOptionPane.showInputDialog("Escolha o tipo de requisiï¿½ï¿½o: \n" + Fachada.getInstance().getTipoRequisicaoString()).toString());
 			
 			Fachada.getInstance().consultarRequisicoes(tipoReq);
 			// falta o resto
@@ -121,12 +121,36 @@ public class InterfaceUsuario {
 		
 	public static void manterUsuario()
 	{
-			
+		int opcaoManterUsuario = Integer.parseInt(JOptionPane.showInputDialog(null, "\t\tManter Usuario\t\t\n\n"
+				+ "1 - Criar usuario\n"
+				+ "2 - Consultar usuarios\n"
+				+ "3 - Excluir usuario\n"
+				+ "4 - Atualizar usuario\n").toString());	
+		
+		switch (opcaoManterUsuario) {
+		case 1:
+			criarUsuario();
+			break;
+		case 2:
+			consultarUsuario();
+			break;
+		case 3:
+			excluirUsuario();
+			break;
+		case 4:
+			atualizarUsuario();
+			break;
+		default:
+			break;
+		}	
 	}
 		
 	public static void criarUsuario()
 	{
-			
+		String nome = JOptionPane.showInputDialog("Nome: ").toString();
+		String departamento = JOptionPane.showInputDialog("Departamento: ").toString();
+		
+		Fachada.getInstance().criarUsuario(nome, departamento);
 	}
 		
 	public static void consultarUsuario()
@@ -152,20 +176,20 @@ public class InterfaceUsuario {
 		int autenticou; // -1 = negativo
 		
 		// mensagem que falta analisar melhor
-		JOptionPane.showMessageDialog(null, "Olá, você está utilizando o Gerenciador de Requisições de serviços.\n"
-				+ "Por favor, digite seu usuário e senha:");
+		JOptionPane.showMessageDialog(null, "Olï¿½, vocï¿½ estï¿½ utilizando o Gerenciador de Requisiï¿½ï¿½es de serviï¿½os.\n"
+				+ "Por favor, digite seu usuï¿½rio e senha:");
 		
 		
 		do {
-			usuario = JOptionPane.showInputDialog("Digite o usuário: ").toString();
+			usuario = JOptionPane.showInputDialog("Digite o usuï¿½rio: ").toString();
 			senha = JOptionPane.showInputDialog("Digite a senha: ").toString();
 			
 			autenticou = Fachada.getInstance().autenticacao(usuario, senha);
 			
 			if (autenticou == -1) {
-				opcaoAut = JOptionPane.showConfirmDialog(null, "Usuário e/ou senha digitados incorreto(s).\nDeseja tentar novamente?");
+				opcaoAut = JOptionPane.showConfirmDialog(null, "Usuï¿½rio e/ou senha digitados incorreto(s).\nDeseja tentar novamente?");
 			} else {
-				JOptionPane.showMessageDialog(null, "Autenticação feita com sucesso!");
+				JOptionPane.showMessageDialog(null, "Autenticaï¿½ï¿½o feita com sucesso!");
 			}
 		} while (opcaoAut == JOptionPane.YES_OPTION);
 			
@@ -173,7 +197,7 @@ public class InterfaceUsuario {
 	}
 	
 	public static void main(String[] args) {
-		// falta rever a inicialização aqui
+		// falta rever a inicializaï¿½ï¿½o aqui
 		autenticacao();
 		menuOpcoes();
 	}

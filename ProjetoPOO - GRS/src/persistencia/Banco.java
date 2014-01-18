@@ -43,6 +43,7 @@ public class Banco {
 	
 	public String salvarUsuario(Usuario usuario) {
 		
+		
 		manager.getTransaction().begin();
 		manager.persist(usuario);
 		manager.getTransaction().commit();

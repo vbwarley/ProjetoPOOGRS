@@ -1,5 +1,7 @@
 package negocios;
 
+import persistencia.Banco;
+
 public class Cliente extends Usuario {
 
 	public Cliente() {
@@ -8,14 +10,16 @@ public class Cliente extends Usuario {
 	
 	@Override
 	public String salvarDados() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		String mensagem = Banco.getInstance().salvarUsuario(this);;
+		return mensagem;
 	}
 
 	@Override
 	public String excluirUsuario() {
-		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 
 }
