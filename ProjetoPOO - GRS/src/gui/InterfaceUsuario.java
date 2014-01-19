@@ -50,6 +50,40 @@ public class InterfaceUsuario {
 		}
 	}
 	
+	public static void menuCliente(){
+		
+		int menuCliente = Integer.parseInt(JOptionPane.showInputDialog("1 - Enviar requisicaoo\n"
+				+ "2 - Consultar requisicao\n"
+				+ "3 - Criar conta\n"
+				+ "4 - Consultar Usuario\n"
+				+ "5 - Sair... ").toString());
+		
+		switch (menuCliente) {
+		case 1:
+			enviarRequisicao();
+			break;
+		case 2:
+			consultarRequisicao();
+			break;
+		case 3:
+			criarUsuario();
+			break;
+		case 4:
+			consultarUsuario();
+			break;
+		case 5:
+			int opcLogOut = JOptionPane.showConfirmDialog(null, "Voce esta prestes a deslogar do sistema... Caso queira continuar, selecione a opcao \"Yes\".\n");
+			if (opcLogOut == JOptionPane.YES_OPTION)
+				System.exit(1);
+			else
+				menuCliente();
+		default:
+			JOptionPane.showMessageDialog(null, "Algo esta errado. Por favor, tente novamente.");
+			menuCliente();
+			break;
+		}
+	}
+	
 	public static void manterRequisicao()
 	{
 		int opcaoManterRequisicao = Integer.parseInt(JOptionPane.showInputDialog(null, "\t\tManter Requisi��o\t\t\n\n"
@@ -246,7 +280,7 @@ public class InterfaceUsuario {
 			if (tipoUsuario == 1){
 				menuOpcoes();
 			} else if (tipoUsuario == 2){
-				
+				menuCliente();
 			}
 		}
 	}
