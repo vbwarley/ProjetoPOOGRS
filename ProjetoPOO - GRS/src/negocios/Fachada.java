@@ -97,6 +97,16 @@ public class Fachada {
 	}
 	
 	public String atualizarUsuario(String nome, String departamento) {
+		Usuario usuario;
+		
+		if (departamento.equals("CTI")){
+			usuario = new Administrador();
+		} else {
+			usuario = new Cliente();
+		}
+		
+		Banco.getInstance();
+		
 		return null;
 	}
 	

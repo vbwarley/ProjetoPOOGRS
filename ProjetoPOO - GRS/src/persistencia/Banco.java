@@ -72,6 +72,10 @@ public class Banco {
 		return u;
 	}
 	
+	public String atualizarUsuario(){
+		return null;
+	}
+	
 	public String excluirUsuario(int codigo) {
 		manager.getTransaction().begin();
 		manager.remove(getInstance().consultarUsuario(codigo));
@@ -82,9 +86,12 @@ public class Banco {
 	
 	public Collection<Usuario> consultarUsuarios(String nome) {
 		
+		Query query = manager.createQuery("SELECT u FROM Usuario u WHERE nome = '" + nome);
 		
+		// teste
+		List<Usuario> usuarios = query.getResultList();
 		
-		return null;
+		return usuarios;
 		
 	}
 	
