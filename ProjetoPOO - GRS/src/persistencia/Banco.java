@@ -81,8 +81,11 @@ public class Banco {
 	}
 	
 	public Collection<Usuario> consultarUsuarios(String nome) {
-		// falta implementar
+		
+		
+		
 		return null;
+		
 	}
 	
 	// mudança no parametro
