@@ -8,7 +8,10 @@ import negocios.Fachada;
 
 public class InterfaceUsuario {
 	
-	Fachada fachada = new Fachada();
+	private static boolean sistemaLogado;
+	
+	//1 para Administrador e 2 para cliente
+	private static int tipoUsuario;
 	
 	public static void menuOpcoes() { 
 		
@@ -121,6 +124,7 @@ public class InterfaceUsuario {
 		
 	public static void manterUsuario()
 	{
+		
 		int opcaoManterUsuario = Integer.parseInt(JOptionPane.showInputDialog(null, "\t\tManter Usuario\t\t\n\n"
 				+ "1 - Criar usuario\n"
 				+ "2 - Consultar usuarios\n"
@@ -178,9 +182,24 @@ public class InterfaceUsuario {
 		
 	}
 		
+	//Adicionar um confirmDialog, pra perguntar se o administrador realmente quer editar o funcionario encontrado
 	public static void atualizarUsuario()
 	{
-			
+		String codigoS = JOptionPane.showInputDialog("Digite o codigo do usuario a ser editado: ");
+		int codigo = Integer.parseInt(codigoS);
+		
+		JOptionPane.showMessageDialog(null, "Informações sobre o usuario encontrado: \n" 
+		+ Fachada.getInstance().consultarUsuarioEdicao(codigo));
+		
+		//Aqui entra o confirmDialog, o código abaixo é para caso ele queira continuar, 
+		//caso não queira, ele retorna ao menu manterUsuario
+		
+		String nome = JOptionPane.showInputDialog("Digite o novo nome do usuario: ");
+
+		String departamento = JOptionPane.showInputDialog("Digite o novo departamento do usuario: ");
+		
+		Fachada.getInstance().atualizarUsuario(codigo, nome, departamento);
+		
 	}
 		
 	public static int autenticacao()
@@ -202,9 +221,11 @@ public class InterfaceUsuario {
 			autenticou = Fachada.getInstance().autenticacao(usuario, senha);
 			
 			if (autenticou == -1) {
-				opcaoAut = JOptionPane.showConfirmDialog(null, "Usu�rio e/ou senha digitados incorreto(s).\nDeseja tentar novamente?");
-			} else {
-				JOptionPane.showMessageDialog(null, "Autentica��o feita com sucesso!");
+				opcaoAut = JOptionPane.showConfirmDialog(null, "Usuario e/ou senha digitados incorreto(s).\nDeseja tentar novamente?");
+			} else if (autenticou == 1) {
+				JOptionPane.showMessageDialog(null, "Autenticao de adminstrador feita com sucesso!");
+			} else if (autenticou  == 2){
+				JOptionPane.showMessageDialog(null, "Autenticao de cliente feita com sucesso!");
 			}
 		} while (opcaoAut == JOptionPane.YES_OPTION);
 			
@@ -213,8 +234,21 @@ public class InterfaceUsuario {
 	
 	public static void main(String[] args) {
 		// falta rever a inicializa��o aqui
-		autenticacao();
-		menuOpcoes();
+		if (!sistemaLogado){
+			autenticacao();
+			if (autenticacao() == 1){
+				tipoUsuario = 1;
+			} else if (autenticacao() == 2){
+				tipoUsuario = 2;
+			}
+			
+		} else {
+			if (tipoUsuario == 1){
+				menuOpcoes();
+			} else if (tipoUsuario == 2){
+				
+			}
+		}
 	}
 }
 

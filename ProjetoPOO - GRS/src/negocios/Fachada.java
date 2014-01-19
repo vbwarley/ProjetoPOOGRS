@@ -75,6 +75,11 @@ public class Fachada {
 		return Banco.getInstance().consultarUsuario(codigo);
 	}
 	
+	public String consultarUsuarioEdicao(int codigo) {
+		
+		return Banco.getInstance().consultarUsuario(codigo).toString();
+	}
+	
 	public ArrayList<String> consultarUsuario(String nomeUsuario) {
 		
 		ArrayList<Usuario> array = new ArrayList<Usuario>();
@@ -96,7 +101,7 @@ public class Fachada {
 		return Banco.getInstance().excluirUsuario(codigoUsuario);
 	}
 	
-	public String atualizarUsuario(String nome, String departamento) {
+	public String atualizarUsuario(int codigo, String nome, String departamento) {
 		Usuario usuario;
 		
 		if (departamento.equals("CTI")){
@@ -105,7 +110,11 @@ public class Fachada {
 			usuario = new Cliente();
 		}
 		
-		Banco.getInstance();
+		usuario.setCodigo(codigo);
+		usuario.setNome(nome);
+		usuario.setDepartamento(departamento);
+		
+		Banco.getInstance().atualizarUsuario(usuario);
 		
 		return null;
 	}

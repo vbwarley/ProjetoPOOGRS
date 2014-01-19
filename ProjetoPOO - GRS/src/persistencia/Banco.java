@@ -72,8 +72,15 @@ public class Banco {
 		return u;
 	}
 	
-	public String atualizarUsuario(){
-		return null;
+	public String atualizarUsuario(Usuario usuario){
+		
+		manager.getTransaction().begin();
+		manager.merge(usuario);
+		manager.getTransaction().commit();
+		
+		String mensagem = "Usuario atualizado no banco de dados. Novas informações: \n " + usuario.toString();
+		
+		return mensagem;
 	}
 	
 	public String excluirUsuario(int codigo) {
