@@ -1,14 +1,24 @@
 package negocios;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Requisicao {
 	
+	@Id
 	private int codigo;
 	private String descricao;
+	@Enumerated(EnumType.STRING)
 	private TipoRequisicao tipoRequisicao;
 	private int prazo;
 	// novo atributo/classe 
 	// rever o que colocar: se atributos, se classe
 	//private Status status;
+	@ManyToOne
 	private Usuario usuario;
 	
 	public Requisicao() {

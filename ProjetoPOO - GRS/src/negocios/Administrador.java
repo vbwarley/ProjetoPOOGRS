@@ -1,7 +1,10 @@
 package negocios;
 
+import javax.persistence.Entity;
+
 import persistencia.Banco;
 
+@Entity
 public class Administrador extends Usuario {
 
 	public Administrador() {

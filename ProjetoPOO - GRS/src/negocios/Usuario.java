@@ -3,15 +3,23 @@ package negocios;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
+
 import negocios.Requisicao;
 import persistencia.Banco;
 
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class Usuario {
 	private int codigo;
 	private String nome;
 	private String departamento;
 	
 	// novo atributo
+	@OneToMany(mappedBy="usuario")
 	private Collection<Requisicao> requisicoes = new ArrayList<Requisicao>();
 	
 	public abstract String salvarDados();
