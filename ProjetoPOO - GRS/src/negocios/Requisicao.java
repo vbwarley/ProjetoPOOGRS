@@ -3,6 +3,7 @@ package negocios;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -10,14 +11,14 @@ import javax.persistence.ManyToOne;
 public class Requisicao {
 	
 	@Id
+	@GeneratedValue
 	private int codigo;
 	private String descricao;
+	
 	@Enumerated(EnumType.STRING)
 	private TipoRequisicao tipoRequisicao;
 	private int prazo;
-	// novo atributo/classe 
-	// rever o que colocar: se atributos, se classe
-	//private Status status;
+	
 	@ManyToOne
 	private Usuario usuario;
 	
@@ -80,9 +81,9 @@ public class Requisicao {
 
 	@Override
 	public String toString() {
-		return "Código da requisição: " + codigo + "\nDescricao: " + descricao
+		return "CÃ³digo da requisiÃ§Ã£o: " + codigo + "\nDescricao: " + descricao
 				+ "\nTipo da Requisicao: " + tipoRequisicao + "\nPrazo: " + prazo
-				+ "\nUsuario que requisitou: " + usuario + "\n";
+				+ "\nUsuario que requisitou: " + usuario.getNome() + "\n\n";
 	}
 	
 	

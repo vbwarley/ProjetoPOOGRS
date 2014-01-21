@@ -1,6 +1,8 @@
 package gui;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -13,21 +15,10 @@ public class InterfaceUsuario {
 	//1 para Administrador e 2 para cliente
 	private static int tipoUsuario;
 	
-	public static void menuOpcoes() { 
-		
-		
-		// -- a implementa��o dos campos usu�rio e senha fica em autenticacao()
-		// lembrar de colocar um op��o para cadastrar o administrador -
-		// ver como fazer isso
-		
-		JOptionPane.showMessageDialog(null, "Ol�, <<aqui fica o nome do usu�rio>>! As op��es dispon�veis a voc� encontram-se abaixo: \n");
-		// nesse caso, deve-se utilizar de algum mecanismo que mostre as op��es de acordo com o tipo de usu�rio
-		// OU ter algum outro mecanismo que impe�a o usuario (cliente) de utilizar os m�todos (polimorfismo?!)
-		
-		// por enquanto vou generalizar e colocar todas
-		
-		int menuOpcoes = Integer.parseInt(JOptionPane.showInputDialog("1 - Manter requisi��o\n"
-				+ "2 - Manter usu�rio\n"
+		public static void menuOpcoes() { 
+			
+		int menuOpcoes = Integer.parseInt(JOptionPane.showInputDialog("1 - Manter requisição\n"
+				+ "2 - Manter usuário\n"
 				+ "3 - Vazar ").toString());
 		
 		switch (menuOpcoes) {
@@ -147,7 +138,9 @@ public class InterfaceUsuario {
 			int tipoReq;
 			tipoReq = Integer.parseInt(JOptionPane.showInputDialog("Escolha o tipo de requisi��o: \n" + Fachada.getInstance().getTipoRequisicaoString()).toString());
 			
-			Fachada.getInstance().consultarRequisicoes(tipoReq);
+			String requisicoes = Fachada.getInstance().consultarRequisicoes(tipoReq);
+										
+			JOptionPane.showMessageDialog(null, requisicoes);
 			// falta o resto
 		}
 		default:
@@ -187,8 +180,9 @@ public class InterfaceUsuario {
 	{
 		String nome = JOptionPane.showInputDialog("Nome: ").toString();
 		String departamento = JOptionPane.showInputDialog("Departamento: ").toString();
+		String senha = JOptionPane.showInputDialog("Digite uma senha: ").toString();
 		
-		JOptionPane.showMessageDialog(null, Fachada.getInstance().criarUsuario(nome, departamento));
+		Fachada.getInstance().criarUsuario(nome, departamento, senha);
 	}
 		
 	public static void consultarUsuario()
@@ -197,13 +191,13 @@ public class InterfaceUsuario {
 		
 		String usuarios = "";
 		
-		for (int i = 0; i < Fachada.getInstance().consultarUsuario(nome).size(); i++){
-			
-			usuarios = Fachada.getInstance().consultarUsuario(nome).get(i) + "\n";
-			
+		List<String> us = Fachada.getInstance().consultarUsuario(nome);
+		
+		for (String s : us){
+			usuarios += s.toString() + "\n";
 		}
 		
-		JOptionPane.showMessageDialog(null, "Usuarios encontrados com esse nome: \n" + usuarios);
+		JOptionPane.showMessageDialog(null, "Usuarios encontrados com esse nome: \n" + (usuarios.equals("") ? 0 : usuarios));
 	}
 		
 	public static void excluirUsuario()
@@ -212,7 +206,7 @@ public class InterfaceUsuario {
 		
 		int codigo = Integer.parseInt(codigoS);
 		
-		JOptionPane.showMessageDialog(null, Fachada.getInstance().excluirUsuario(codigo));
+		Fachada.getInstance().excluirUsuario(codigo);
 		
 	}
 		
@@ -240,49 +234,51 @@ public class InterfaceUsuario {
 	{
 		String usuario;
 		String senha;
-		int opcaoAut = 1;
-		int autenticou; // -1 = negativo
-		
+		int opcaoAut = 0;
+		int autenticou = 0; 		
 		// mensagem que falta analisar melhor
-		JOptionPane.showMessageDialog(null, "Ol�, voc� est� utilizando o Gerenciador de Requisi��es de servi�os.\n"
-				+ "Por favor, digite seu usu�rio e senha:");
+		JOptionPane.showMessageDialog(null, "Você precisa logar para continuar utilizando nosso sistema. Por favor, digite seu usuário e senha:");
 		
 		
 		do {
-			usuario = JOptionPane.showInputDialog("Digite o usu�rio: ").toString();
+			usuario = JOptionPane.showInputDialog("Digite o usuário: ").toString();
 			senha = JOptionPane.showInputDialog("Digite a senha: ").toString();
 			
 			autenticou = Fachada.getInstance().autenticacao(usuario, senha);
 			
-			if (autenticou == -1) {
-				opcaoAut = JOptionPane.showConfirmDialog(null, "Usuario e/ou senha digitados incorreto(s).\nDeseja tentar novamente?");
+			if (autenticou == 0) {
+				opcaoAut = JOptionPane.showConfirmDialog(null, "Usuario e/ou senha digitados incorreto(s).\n\nDeseja tentar novamente?");
 			} else if (autenticou == 1) {
 				JOptionPane.showMessageDialog(null, "Autenticao de adminstrador feita com sucesso!");
-			} else if (autenticou  == 2){
+			} else if (autenticou  >= 2){
 				JOptionPane.showMessageDialog(null, "Autenticao de cliente feita com sucesso!");
 			}
-		} while (opcaoAut == JOptionPane.YES_OPTION);
+			
+		} while (opcaoAut == JOptionPane.YES_OPTION || autenticou == 0);
 			
 		return autenticou;
 	}
 	
 	public static void main(String[] args) {
-		// falta rever a inicializa��o aqui
+		JOptionPane.showMessageDialog(null, "Olá! As opções disponíveis a você encontram-se abaixo: \n");
+		// falta rever a inicialização aqui
+		// CONSERTAR ALGO AQUI QUE TÁ ERRADO 
 		if (!sistemaLogado){
 			autenticacao();
 			if (autenticacao() == 1){
 				tipoUsuario = 1;
-			} else if (autenticacao() == 2){
+			} else if (autenticacao() > 2){
 				tipoUsuario = 2;
 			}
 			
 		} else {
 			if (tipoUsuario == 1){
 				menuOpcoes();
-			} else if (tipoUsuario == 2){
+			} else if (tipoUsuario > 2){
 				menuCliente();
 			}
 		}
+		
 	}
 }
 

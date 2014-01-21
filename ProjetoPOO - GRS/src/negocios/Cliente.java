@@ -11,18 +11,14 @@ public class Cliente extends Usuario {
 
 	}
 	
-	@Override
-	public String salvarDados() {
-		
-		String mensagem = Banco.getInstance().salvarUsuario(this);;
-		return mensagem;
-	}
-
-	@Override
-	public String excluirUsuario() {
-		return null;
+	public Cliente(String nome, String departamento, String senha) {
+		setNome(nome);
+		setDepartamento(departamento);
+		setSenha(senha);
 	}
 	
-	
-
+	@Override
+	public void salvarDados() {
+		Banco.getInstance().salvarUsuario(this);;
+	}
 }

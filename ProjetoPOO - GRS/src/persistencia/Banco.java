@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -31,90 +32,77 @@ public class Banco {
 	// analisar este método depois
 	public Usuario autenticacao(String nomeUsuario, String senha) {
 		
-		Query query = manager.createQuery("SELECT u FROM Usuario u WHERE nome = '" + nomeUsuario + "' AND "
-				+ "senha = '" + senha + "'");
-		
+		Query query = manager.createNamedQuery("Usuario.findByLogin");
+		query.setParameter("nome", nomeUsuario);
+		query.setParameter("senha", senha);
 		// teste
-		List<Usuario> usuarios = query.getResultList();
-		Usuario u = usuarios.get(0);
+		
+		Usuario u;
+		
+		try {
+			u = (Usuario) query.getSingleResult();
+		} catch (NoResultException e) {
+			u = null;
+		}
 		
 		return u;
 	}
 	
-	public String salvarUsuario(Usuario usuario) {
-		
-		
+	public void salvarUsuario(Usuario usuario) {		
 		manager.getTransaction().begin();
 		manager.persist(usuario);
 		manager.getTransaction().commit();
-		// rever a utilização dessa mensagem
-		String mensagem = "Usuário cadastrado com sucesso!";
-		return mensagem;
 	}
 	
-	public String salvarRequisicao(Requisicao requisicao) {
-		// impelementado
+	public void salvarRequisicao(Requisicao requisicao) {
 		manager.getTransaction().begin();
 		manager.persist(requisicao);
 		manager.getTransaction().commit();
-		
-		return null;
 	}
 	
 	// novo método adicionado
 	public Usuario consultarUsuario(int codigo) {
-		
-		// não precisa abrir conexão
-		manager.getTransaction().begin();
-		Usuario u = manager.find(Usuario.class, codigo);
-		// nem commitar
-		manager.getTransaction().commit();
-		return u;
+		return manager.find(Usuario.class, codigo);
 	}
 	
-	public String atualizarUsuario(Usuario usuario){
+	public void atualizarUsuario(Usuario usuario){
 		
 		manager.getTransaction().begin();
 		manager.merge(usuario);
 		manager.getTransaction().commit();
 		
-		String mensagem = "Usuario atualizado no banco de dados. Novas informações: \n " + usuario.toString();
-		
-		return mensagem;
 	}
 	
-	public String excluirUsuario(int codigo) {
+	public void excluirUsuario(int codigo) {
 		manager.getTransaction().begin();
 		manager.remove(getInstance().consultarUsuario(codigo));
 		manager.getTransaction().commit();
-		// e se o usuario não foi excluído? se deu erro, não se deve retornar essa mensagem
-		return "Usuario excluído com sucesso!";
+		
 	}
 	
-	public Collection<Usuario> consultarUsuarios(String nome) {
+	public List<Usuario> consultarUsuarios(String nome) {
 		
-		Query query = manager.createQuery("SELECT u FROM Usuario u WHERE nome = '" + nome);
-		
-		// teste
+		Query query = manager.createQuery("SELECT u FROM Usuario u WHERE nome = '" + nome + "'");
 		List<Usuario> usuarios = query.getResultList();
 		
 		return usuarios;
-		
 	}
 	
 	// mudança no parametro
 	// analisar
-	public Collection<Requisicao> consultarRequisicoes(Date data) {
+	public List<Requisicao> consultarRequisicoes(Date data) {
 		
 		Query query = manager.createQuery("SELECT r FROM Requisicao r WHERE data = '" + data + "'");
-		Collection<Requisicao> requisicoes = query.getResultList();
+		List<Requisicao> requisicoes = query.getResultList();
 		
 		return requisicoes;
 	}
 	
-	public Collection<Requisicao> consultarRequisicoes(TipoRequisicao tipoRequisicao) {
-		// falta implementar
-		return null;
+	public List<Requisicao> consultarRequisicoes(TipoRequisicao tipoRequisicao) {
+		Query query = manager.createQuery("SELECT r FROM Requisicao r WHERE tipoRequisicao = '" + tipoRequisicao + "'");
+		List<Requisicao> requisicoes = query.getResultList();
+		
+		return requisicoes;
 	}
 	
 }

@@ -12,16 +12,20 @@ public class Administrador extends Usuario {
 
 	}
 	
+	public Administrador(String nome, String departamento, String senha) {
+		setNome(nome);
+		setDepartamento(departamento);
+		setSenha(senha);
+	}
+	
+	
 	@Override
-	public String salvarDados() {
-		String mensagem = Banco.getInstance().salvarUsuario(this);;
-		return mensagem;
+	public void salvarDados() {
+		Banco.getInstance().salvarUsuario(this);
 	}
 
-	@Override
-	public String excluirUsuario() {
-		// TODO Auto-generated method stub
-		return null;
+	public static void excluirUsuario(int codigo) {
+		Banco.getInstance().excluirUsuario(codigo);
 	}
 	
 }

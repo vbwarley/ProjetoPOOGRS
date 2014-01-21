@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import negocios.Requisicao;
@@ -13,17 +16,22 @@ import persistencia.Banco;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@NamedQuery(name="Usuario.findByLogin", 
+		query="select u from Usuario u where u.nome = :nome and u.senha = :senha")
 public abstract class Usuario {
+	
+	@Id
+	@GeneratedValue
 	private int codigo;
 	private String nome;
 	private String departamento;
+	private String senha;
 	
 	// novo atributo
 	@OneToMany(mappedBy="usuario")
 	private Collection<Requisicao> requisicoes = new ArrayList<Requisicao>();
 	
-	public abstract String salvarDados();
-	public abstract String excluirUsuario();
+	public abstract void salvarDados();
 	
 	// novo m�todo
 	public void enviarRequisicao(Requisicao requisicao) {
@@ -50,10 +58,37 @@ public abstract class Usuario {
 		this.departamento = departamento;
 	}	
 	
+	public String getSenha() {
+		return senha;
+	}
+	
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	public static int autenticar(String nome, String senha) {
+		Usuario usuario = Banco.getInstance().autenticacao(nome, senha);
+		int codigo = 0;
+		
+		if (usuario == null)
+//			throw new Exception(); // rever isso
+			System.out.println("Erro");
+		else
+			codigo = usuario.getCodigo(); 
+		
+		return codigo;
+	}
+	
+	public static Usuario consultarUsuario(int codigo) {
+		return Banco.getInstance().consultarUsuario(codigo);
+	}
+	
 	public String toString(){
 		String informacoes = "Código: " + this.codigo +"\nNome: " + this.nome + "\nDepartamento: "+ this.departamento;
 				
 		return informacoes;
 	}
+
+	
 	
 }

@@ -3,6 +3,7 @@ package negocios;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import persistencia.Banco;
 
@@ -40,65 +41,60 @@ public class Fachada {
 	}
 	
 	// mudan�a do tipo do par�metro e tipo de retorno
-	public Collection<String> consultarRequisicoes(int tipoRequisicao) {
-		TipoRequisicao tR;
-		Collection<Requisicao> requisicoes;
+	public String consultarRequisicoes(int tipoRequisicao) {
+		List<Requisicao> requisicoes;
+	
+		requisicoes = Banco.getInstance().consultarRequisicoes(getTipoRequisicao(tipoRequisicao));
 		
-		tR = getTipoRequisicao(tipoRequisicao);
-		requisicoes = Banco.getInstance().consultarRequisicoes(tR);
-		
-		Collection<String> requisicoesString = new ArrayList<String>();
+		String requisicoesString = "";
 		
 		for (Requisicao r : requisicoes )
-			requisicoesString.add(r.toString()); 
+			requisicoesString += r.toString() + "-*-";
 		
 		return requisicoesString;
 	
 	}
 	
-	public String criarUsuario(String nome, String departamento) {
+	public void criarUsuario(String nome, String departamento, String senha) {
 		Usuario usuario;
 		
 		if (departamento.equals("CTI")){
-			usuario = new Administrador();
+			usuario = new Administrador(nome, departamento, senha);
 		} else {
-			usuario = new Cliente();
+			usuario = new Cliente(nome, departamento, senha);
 		}
 		
-		String mensagem = usuario.salvarDados();;
-		return mensagem;
+		usuario.salvarDados();;
 	}
 	
 	// adicionando novo m�todo - teste
 	private Usuario consultarUsuario(int codigo) {
 		
-		return Banco.getInstance().consultarUsuario(codigo);
+		return Usuario.consultarUsuario(codigo);
 	}
+	
 	
 	public String consultarUsuarioEdicao(int codigo) {
 		
 		return Banco.getInstance().consultarUsuario(codigo).toString();
 	}
 	
-	public ArrayList<String> consultarUsuario(String nomeUsuario) {
+	public List<String> consultarUsuario(String nomeUsuario) {
 		
-		ArrayList<Usuario> array = new ArrayList<Usuario>();
+		List<Usuario> usuarios = new ArrayList<Usuario>();
 		
-		array = (ArrayList<Usuario>) Banco.getInstance().consultarUsuarios(nomeUsuario);
+		usuarios = Banco.getInstance().consultarUsuarios(nomeUsuario);
 		
-		ArrayList<String> informacoes = new ArrayList<String>();
+		List<String> informacoes = new ArrayList<String>();
 		
-		for (int i = 0; i < Banco.getInstance().consultarUsuarios(nomeUsuario).size(); i++){
-			informacoes.add(array.get(i).toString());
-		}
-		
-		
+		for (Usuario u : usuarios)
+			informacoes.add(u.toString());
+				
 		return informacoes;
 	}
 	
-	public String excluirUsuario(int codigoUsuario) {
-		
-		return Banco.getInstance().excluirUsuario(codigoUsuario);
+	public void excluirUsuario(int codigoUsuario) {
+		Administrador.excluirUsuario(codigoUsuario);
 	}
 	
 	public String atualizarUsuario(int codigo, String nome, String departamento) {
@@ -121,9 +117,8 @@ public class Fachada {
 	
 	// tipo de retorno alterado
 	public int autenticacao(String nomeUsuario, String senha) {
-		Usuario usuario = Banco.getInstance().autenticacao(nomeUsuario, senha);
-		int codigo = usuario == null ? -1 : usuario.getCodigo(); 
-		
+		int codigo = Usuario.autenticar(nomeUsuario, senha);
+				
 		return codigo;
 	}
 	
