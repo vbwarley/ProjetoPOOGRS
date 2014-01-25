@@ -35,7 +35,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import net.miginfocom.swing.MigLayout;
 
-public class InterfaceGU extends JFrame {
+public class interfaceLoginCadastro extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField nomeText;
@@ -52,7 +52,7 @@ public class InterfaceGU extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterfaceGU frame = new InterfaceGU();
+					interfaceLoginCadastro frame = new interfaceLoginCadastro();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,7 +64,7 @@ public class InterfaceGU extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InterfaceGU() {
+	public interfaceLoginCadastro() {
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
