@@ -30,13 +30,13 @@ public class Banco {
 		return instance;
 	}
 	
-	public Usuario autenticacao(String nomeUsuario, String senha) {
+	public Usuario autenticacao(String nomeUsuario, String senha) throws AutenticarException {
 		
 		Query query = manager.createNamedQuery("Usuario.findByLogin");
 		query.setParameter("nome", nomeUsuario);
 		query.setParameter("senha", senha);
 	
-		Usuario u;
+		Usuario u = null;
 		
 		try {
 			u = (Usuario) query.getSingleResult();
@@ -47,7 +47,7 @@ public class Banco {
 		return u;
 	}
 	
-	public void criarUsuario(Usuario usuario) {		
+	public void salvarUsuario(Usuario usuario) throws UsuarioException {		
 		try {
 			if (Integer.valueOf(usuario.getCodigo()) == null) {
 				manager.getTransaction().begin();
@@ -63,7 +63,7 @@ public class Banco {
 		}
 	}
 	
-	public void salvarRequisicao(Requisicao requisicao) {
+	public void salvarRequisicao(Requisicao requisicao) throws RequisicaoException {
 		try {
 			manager.getTransaction().begin();
 			manager.persist(requisicao);
@@ -109,7 +109,7 @@ public class Banco {
 	}
 	
 	
-	public List<Requisicao> consultarRequisicoes(Date data) {
+	public List<Requisicao> consultarRequisicoes(Date data) throws RequisicaoException {
 		
 		List<Requisicao> requisicoes = null;
 		
@@ -123,7 +123,7 @@ public class Banco {
 		return requisicoes;
 	}
 	
-	public List<Requisicao> consultarRequisicoes(TipoRequisicao tipoRequisicao) {
+	public List<Requisicao> consultarRequisicoes(TipoRequisicao tipoRequisicao) throws RequisicaoException {
 		
 		List<Requisicao> requisicoes = null;
 		

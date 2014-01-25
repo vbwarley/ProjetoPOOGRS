@@ -1,7 +1,9 @@
 package negocios;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,18 +44,23 @@ public abstract class Usuario {
 	public int getCodigo() {
 		return codigo;
 	}
+	
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
+	
 	public String getNome() {
 		return nome;
 	}
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
 	public String getDepartamento() {
 		return departamento;
 	}
+	
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 	}	
@@ -70,10 +77,7 @@ public abstract class Usuario {
 		Usuario usuario = Banco.getInstance().autenticacao(nome, senha);
 		int codigo = 0;
 		
-		if (usuario == null)
-//			throw new Exception(); // rever isso
-			System.out.println("Erro");
-		else
+		if (usuario != null)
 			codigo = usuario.getCodigo(); 
 		
 		return codigo;
@@ -83,12 +87,28 @@ public abstract class Usuario {
 		return Banco.getInstance().consultarUsuario(codigo);
 	}
 	
-	public String toString(){
-		String informacoes = "Código: " + this.codigo +"\nNome: " + this.nome + "\nDepartamento: "+ this.departamento;
-				
-		return informacoes;
+	public static String consultarUsuario(String nome) {
+		List<Usuario> usuarios = Banco.getInstance().consultarUsuario(nome);
+		String usuariosString = "";
+		
+		for (Usuario u : usuarios)
+			usuariosString += u.toString();
+		
+		return usuariosString;
 	}
-
 	
+	public static String consultarRequisicao(Date data) {
+		List<Requisicao> requisicoes = Banco.getInstance().consultarRequisicoes(data);
+		String requisicoesString = "";
+		
+		for (Requisicao r : requisicoes)
+			requisicoesString += r.toString();
+		
+		return requisicoesString;
+	}
 	
+	public String toString(){
+		String informacoes = "Código: " + this.codigo +"\nNome: " + this.nome + "\nDepartamento: "+ this.departamento;	
+		return informacoes;
+	}	
 }

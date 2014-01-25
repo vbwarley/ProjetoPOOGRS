@@ -11,6 +11,7 @@ public class Fachada {
 	
 	// criando singleton
 	private static Fachada instance = new Fachada();
+	private UsuarioFactory factory = new UsuarioFactory();
 	
 	public Fachada() {
 		
@@ -20,27 +21,21 @@ public class Fachada {
 		return instance;
 	}
 	
-	// mudan�a do tipo do segundo parametro - denovo 
-	// adi��o do ultimo
-	public String enviarRequisicao(String descricaoRequisicao, int tipoRequisicao, int prazoParaTermino_dias, int codigoUsuario) {
-		Usuario usuario = consultarUsuario(codigoUsuario);
+	public void enviarRequisicao(String descricaoRequisicao, int tipoRequisicao, int prazoParaTermino_dias, int codigoUsuario) {
+		Usuario usuario = Usuario.consultarUsuario(codigoUsuario);
 			
 		Requisicao requisicao = new Requisicao(descricaoRequisicao, getTipoRequisicao(tipoRequisicao), 
 				prazoParaTermino_dias, usuario);
 		
 		usuario.enviarRequisicao(requisicao);
-		
-		// retornar string?
-		return null;
 	}
 	
-	public ArrayList<String> consultarRequisicoes(Date data) {
-		
-		return null;
+	public String consultarRequisicoes(Date data) {
+		return Usuario.consultarRequisicao(data);
 	
 	}
 	
-	// mudan�a do tipo do par�metro e tipo de retorno
+	// essa implementação precisa ficar aqui mesmo
 	public String consultarRequisicoes(int tipoRequisicao) {
 		List<Requisicao> requisicoes;
 	
@@ -56,41 +51,22 @@ public class Fachada {
 	}
 	
 	public void criarUsuario(String nome, String departamento, String senha) {
-		Usuario usuario;
+		Usuario usuario = factory.criar(departamento);
 		
-		if (departamento.equals("CTI")){
-			usuario = new Administrador(nome, departamento, senha);
-		} else {
-			usuario = new Cliente(nome, departamento, senha);
-		}
+		usuario.setNome(nome);
+		usuario.setSenha(senha);
 		
-		usuario.salvarDados();;
+		usuario.salvarDados();
 	}
 	
-	// adicionando novo m�todo - teste
-	private Usuario consultarUsuario(int codigo) {
+	public String consultarUsuario(int codigo) {
 		
-		return Usuario.consultarUsuario(codigo);
+		return Usuario.consultarUsuario(codigo).toString();
 	}
 	
-	
-	public String consultarUsuarioEdicao(int codigo) {
-		
-		return Banco.getInstance().consultarUsuario(codigo).toString();
-	}
-	
-	public List<String> consultarUsuario(String nomeUsuario) {
-		
-		List<Usuario> usuarios = new ArrayList<Usuario>();
-		
-		usuarios = Banco.getInstance().consultarUsuarios(nomeUsuario);
-		
-		List<String> informacoes = new ArrayList<String>();
-		
-		for (Usuario u : usuarios)
-			informacoes.add(u.toString());
+	public String consultarUsuario(String nomeUsuario) {
 				
-		return informacoes;
+		return Usuario.consultarUsuario(nomeUsuario);
 	}
 	
 	public void excluirUsuario(int codigoUsuario) {
@@ -98,21 +74,15 @@ public class Fachada {
 	}
 	
 	public String atualizarUsuario(int codigo, String nome, String departamento) {
-		Usuario usuario;
-		
-		if (departamento.equals("CTI")){
-			usuario = new Administrador();
-		} else {
-			usuario = new Cliente();
-		}
+		Usuario usuario = factory.criar(departamento);
 		
 		usuario.setCodigo(codigo);
 		usuario.setNome(nome);
 		usuario.setDepartamento(departamento);
 		
-		Banco.getInstance().atualizarUsuario(usuario);
+		usuario.salvarDados();
 		
-		return null;
+		return usuario.toString();
 	}
 	
 	// tipo de retorno alterado
