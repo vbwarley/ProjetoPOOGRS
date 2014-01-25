@@ -1,7 +1,6 @@
 package persistencia;
 
 import java.sql.Date;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,11 +9,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import excecoes.AutenticarException;
+import excecoes.RequisicaoException;
+import excecoes.UsuarioException;
 import negocios.Requisicao;
 import negocios.TipoRequisicao;
 import negocios.Usuario;
 
-// Esta classe é Banco
 public class Banco {
 	
 	private static Banco instance = new Banco();
@@ -29,78 +30,109 @@ public class Banco {
 		return instance;
 	}
 	
-	// analisar este método depois
 	public Usuario autenticacao(String nomeUsuario, String senha) {
 		
 		Query query = manager.createNamedQuery("Usuario.findByLogin");
 		query.setParameter("nome", nomeUsuario);
 		query.setParameter("senha", senha);
-		// teste
-		
+	
 		Usuario u;
 		
 		try {
 			u = (Usuario) query.getSingleResult();
 		} catch (NoResultException e) {
-			u = null;
+			throw new AutenticarException("Não foi possível autenticar.");
 		}
 		
 		return u;
 	}
 	
-	public void salvarUsuario(Usuario usuario) {		
-		manager.getTransaction().begin();
-		manager.persist(usuario);
-		manager.getTransaction().commit();
+	public void criarUsuario(Usuario usuario) {		
+		try {
+			if (Integer.valueOf(usuario.getCodigo()) == null) {
+				manager.getTransaction().begin();
+				manager.persist(usuario);
+				manager.getTransaction().commit();
+			} else {
+				manager.getTransaction().begin();
+				manager.merge(usuario);
+				manager.getTransaction().commit();
+			}
+		} catch (RuntimeException e) {
+			throw new UsuarioException("Não foi possível criar o usuário.");
+		}
 	}
 	
 	public void salvarRequisicao(Requisicao requisicao) {
-		manager.getTransaction().begin();
-		manager.persist(requisicao);
-		manager.getTransaction().commit();
+		try {
+			manager.getTransaction().begin();
+			manager.persist(requisicao);
+			manager.getTransaction().commit();
+		} catch (RuntimeException e) {
+			throw new RequisicaoException("Não foi possível salvar a requisição.");
+		}
 	}
 	
-	// novo método adicionado
-	public Usuario consultarUsuario(int codigo) {
-		return manager.find(Usuario.class, codigo);
+	public Usuario consultarUsuario(int codigo) throws UsuarioException {
+		try {
+			return manager.find(Usuario.class, codigo);
+		} catch (RuntimeException e) {
+			throw new UsuarioException("Erro ao consultar usuário.");
+		}
+	}
+
+	
+	public void excluirUsuario(int codigo) throws UsuarioException {
+		
+		try {
+			manager.getTransaction().begin();
+			manager.remove(getInstance().consultarUsuario(codigo));
+			manager.getTransaction().commit();
+		} catch (RuntimeException e) {
+			throw new UsuarioException("Erro ao tentar excluir usuário!");
+		}
+		
 	}
 	
-	public void atualizarUsuario(Usuario usuario){
+	public List<Usuario> consultarUsuario(String nome) throws UsuarioException {
 		
-		manager.getTransaction().begin();
-		manager.merge(usuario);
-		manager.getTransaction().commit();
+		List<Usuario> usuarios;
 		
-	}
-	
-	public void excluirUsuario(int codigo) {
-		manager.getTransaction().begin();
-		manager.remove(getInstance().consultarUsuario(codigo));
-		manager.getTransaction().commit();
-		
-	}
-	
-	public List<Usuario> consultarUsuarios(String nome) {
-		
-		Query query = manager.createQuery("SELECT u FROM Usuario u WHERE nome = '" + nome + "'");
-		List<Usuario> usuarios = query.getResultList();
+		try {
+			Query query = manager.createQuery("SELECT u FROM Usuario u WHERE nome = '" + nome + "'");
+			usuarios = query.getResultList();
+		} catch (RuntimeException e) {
+			throw new UsuarioException("Erro ao tentar consultar usuários!");
+		}
 		
 		return usuarios;
 	}
 	
-	// mudança no parametro
-	// analisar
+	
 	public List<Requisicao> consultarRequisicoes(Date data) {
 		
-		Query query = manager.createQuery("SELECT r FROM Requisicao r WHERE data = '" + data + "'");
-		List<Requisicao> requisicoes = query.getResultList();
+		List<Requisicao> requisicoes = null;
+		
+		try {
+			Query query = manager.createQuery("SELECT r FROM Requisicao r WHERE data = '" + data + "'");
+			requisicoes = query.getResultList();
+		} catch (RuntimeException e) {
+			throw new RequisicaoException("Não foi possível consultar requisições a partir da data.");
+		}
 		
 		return requisicoes;
 	}
 	
 	public List<Requisicao> consultarRequisicoes(TipoRequisicao tipoRequisicao) {
-		Query query = manager.createQuery("SELECT r FROM Requisicao r WHERE tipoRequisicao = '" + tipoRequisicao + "'");
-		List<Requisicao> requisicoes = query.getResultList();
+		
+		List<Requisicao> requisicoes = null;
+		
+		try {
+			Query query = manager.createQuery("SELECT r FROM Requisicao r WHERE tipoRequisicao = '" + tipoRequisicao + "'");
+			requisicoes = query.getResultList();
+		} catch (RuntimeException e) {
+			throw new RequisicaoException("Não foi possível consultar requisições a partir do tipo.");
+		}
 		
 		return requisicoes;
 	}
