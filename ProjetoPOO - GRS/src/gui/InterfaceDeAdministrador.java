@@ -48,10 +48,14 @@ public class InterfaceDeAdministrador extends JFrame {
 	private JTextField textField_11;
 	private JPanel painelConsultarRequisicao;
 
+	private static int codigoUsuario;
+	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void executar(int codigo) {
+		codigoUsuario = codigo;
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

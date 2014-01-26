@@ -22,7 +22,7 @@ public class Fachada {
 	
 	// mudan�a do tipo do segundo parametro - denovo 
 	// adi��o do ultimo
-	public String enviarRequisicao(String descricaoRequisicao, int tipoRequisicao, int prazoParaTermino_dias, int codigoUsuario) {
+	public void enviarRequisicao(String descricaoRequisicao, int tipoRequisicao, int prazoParaTermino_dias, int codigoUsuario) {
 		Usuario usuario = consultarUsuario(codigoUsuario);
 			
 		Requisicao requisicao = new Requisicao(descricaoRequisicao, getTipoRequisicao(tipoRequisicao), 
@@ -30,14 +30,19 @@ public class Fachada {
 		
 		usuario.enviarRequisicao(requisicao);
 		
-		// retornar string?
-		return null;
 	}
 	
-	public ArrayList<String> consultarRequisicoes(Date data) {
+	public String consultarRequisicoes(Date data) {
+		List<Requisicao> requisicoes;
 		
-		return null;
-	
+		requisicoes = Banco.getInstance().consultarRequisicoes(data);
+		
+		String requisicoesString = "";
+		
+		for (Requisicao r : requisicoes )
+			requisicoesString += r.toString() + "-*-";
+		
+		return requisicoesString;
 	}
 	
 	// mudan�a do tipo do par�metro e tipo de retorno

@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -27,24 +28,35 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Insets;
+
 import javax.swing.BoxLayout;
+
 import java.awt.GridLayout;
 import java.awt.CardLayout;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
 import net.miginfocom.swing.MigLayout;
 
 public class interfaceLoginCadastro extends JFrame {
 
+	//Butões
+	//Paineis
 	private JPanel contentPane;
+	private JPanel painelLogin;
+	private JPanel painelCadastrar;
+	
+	//Campos de texto
 	private JTextField nomeText;
 	private JTextField senhaText;
-	private JPanel painelLogin;
 	private JTextField nomeCadastroText;
 	private JTextField senhaCadastroText;
-	private JTextField textField;
-	private JPanel painelCadastrar;
+	private JTextField departamentoCadastroText;
+	
+	//ComboBoxes
+	
 	/**
 	 * Launch the application.
 	 */
@@ -67,6 +79,7 @@ public class interfaceLoginCadastro extends JFrame {
 	public interfaceLoginCadastro() {
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("SGRS - DourLey");
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -80,11 +93,9 @@ public class interfaceLoginCadastro extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				
-				
 				if (painelCadastrar != null){
 					painelCadastrar.setVisible(false);
-				}
+				} 
 				
 				painelLogin();
 				
@@ -133,6 +144,23 @@ public class interfaceLoginCadastro extends JFrame {
 		
 		JButton btnAutenticar = new JButton("Autenticar");
 		painelLogin.add(btnAutenticar, "cell 1 2");
+		btnAutenticar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//Aqui se divide quem é cliente e quem é administrador
+				int tipoUsuario = InterfaceUsuario.autenticacao(nomeText.getText(), senhaText.getText());
+				
+				if (tipoUsuario == 1) {
+					InterfaceDeAdministrador.executar(tipoUsuario);
+					System.exit(0);
+				} else if (tipoUsuario >= 2){
+					InterfaseDeCliente.executar(tipoUsuario);
+					System.exit(0);
+				}
+				
+			}
+		});
 		
 		contentPane.add(painelLogin, BorderLayout.CENTER);
 		contentPane.setVisible(false);
@@ -164,12 +192,21 @@ public class interfaceLoginCadastro extends JFrame {
 		JLabel lblDepartamento = new JLabel("Departamento:");
 		painelCadastrar.add(lblDepartamento, "cell 0 2,alignx trailing");
 		
-		textField = new JTextField();
-		painelCadastrar.add(textField, "cell 1 2,alignx center");
-		textField.setColumns(10);
+		departamentoCadastroText = new JTextField();
+		painelCadastrar.add(departamentoCadastroText , "cell 1 2,alignx center");
+		departamentoCadastroText.setColumns(10);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		painelCadastrar.add(btnCadastrar, "cell 1 3,alignx center");
+		btnCadastrar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			
+				InterfaceUsuario.criarUsuario(nomeCadastroText.getText(), departamentoCadastroText.getText(), senhaCadastroText.getText());
+				
+			}
+		});
 		
 		contentPane.add(painelCadastrar, BorderLayout.CENTER);
 		contentPane.setVisible(false);
