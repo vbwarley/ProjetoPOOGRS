@@ -27,7 +27,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
 
-public class InterfaseDeCliente extends JFrame {
+public class InterfaceDeCliente extends JFrame {
 
 	private static int codigoUsuario = 2;
 	
@@ -59,7 +59,7 @@ public class InterfaseDeCliente extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterfaseDeCliente frame = new InterfaseDeCliente();
+					InterfaceDeCliente frame = new InterfaceDeCliente();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,7 +71,7 @@ public class InterfaseDeCliente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InterfaseDeCliente() {
+	public InterfaceDeCliente() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("SGRS - DourLey");
 		setBounds(100, 100, 515, 300);

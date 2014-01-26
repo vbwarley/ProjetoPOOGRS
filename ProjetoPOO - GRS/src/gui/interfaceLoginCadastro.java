@@ -155,7 +155,7 @@ public class interfaceLoginCadastro extends JFrame {
 					InterfaceDeAdministrador.executar(tipoUsuario);
 					System.exit(0);
 				} else if (tipoUsuario >= 2){
-					InterfaseDeCliente.executar(tipoUsuario);
+					InterfaceDeCliente.executar(tipoUsuario);
 					System.exit(0);
 				}
 				
