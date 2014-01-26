@@ -108,7 +108,6 @@ public class InterfaceUsuario {
 			excluirUsuario();
 			break;
 		case 4:
-			atualizarUsuario();
 			break;
 		default:
 			break;
@@ -122,13 +121,7 @@ public class InterfaceUsuario {
 		
 	public static void consultarUsuario(String nome)
 	{
-		String usuarios = "";
-		
-		List<String> us = Fachada.getInstance().consultarUsuario(nome);
-		
-		for (String s : us){
-			usuarios += s.toString() + "\n";
-		}
+		String usuarios = Fachada.getInstance().consultarUsuario(nome);
 		
 		JOptionPane.showMessageDialog(null, "Usuarios encontrados com esse nome: \n" + (usuarios.equals("") ? 0 : usuarios));
 	}
@@ -144,21 +137,8 @@ public class InterfaceUsuario {
 	}
 		
 	//Adicionar um confirmDialog, pra perguntar se o administrador realmente quer editar o funcionario encontrado
-	public static void atualizarUsuario()
-	{
-		String codigoS = JOptionPane.showInputDialog("Digite o codigo do usuario a ser editado: ");
-		int codigo = Integer.parseInt(codigoS);
-		
-		JOptionPane.showMessageDialog(null, "Informações sobre o usuario encontrado: \n" 
-		+ Fachada.getInstance().consultarUsuarioEdicao(codigo));
-		
-		//Aqui entra o confirmDialog, o código abaixo é para caso ele queira continuar, 
-		//caso não queira, ele retorna ao menu manterUsuario
-		
-		String nome = JOptionPane.showInputDialog("Digite o novo nome do usuario: ");
-
-		String departamento = JOptionPane.showInputDialog("Digite o novo departamento do usuario: ");
-		
+	public static void atualizarUsuario(int codigo, String nome, String departamento)
+	{		
 		Fachada.getInstance().atualizarUsuario(codigo, nome, departamento);
 		
 	}
