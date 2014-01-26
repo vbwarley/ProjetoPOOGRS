@@ -40,7 +40,6 @@ public class InterfaceDeAdministrador extends JFrame {
 	private JTextField textField_7;
 	private JTextField textField_8;
 	private JPanel painelAtualizarUsuario;
-	//private JPanel painelConsultarRequisicao;
 	private JTextField textField_9;
 	private JTextField textField_10;
 	private Container painelManterRequisicao;
@@ -86,11 +85,11 @@ public class InterfaceDeAdministrador extends JFrame {
 		JButton btnManterUsuario = new JButton("Manter usuarios");
 		btnManterUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (painelManterUsuarios == null){
-					painelManterUsuarios();
-				} else {
-					painelManterUsuarios.setVisible(true);
-				}
+				if (painelManterRequisicao != null){
+					painelManterRequisicao.setVisible(false);
+				} 
+				
+				painelManterUsuarios();
 			}
 		});
 		toolBar.add(btnManterUsuario);
@@ -98,6 +97,11 @@ public class InterfaceDeAdministrador extends JFrame {
 		JButton btnManterRequisio = new JButton("Manter requisições");
 		btnManterRequisio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (painelManterUsuarios != null){
+					painelManterUsuarios.setVisible(false);
+				} 
+				
+				painelManterRequisicao();
 			}
 		});
 		toolBar.add(btnManterRequisio);
@@ -108,7 +112,8 @@ public class InterfaceDeAdministrador extends JFrame {
 	public void painelManterUsuarios(){
 
 		painelManterUsuarios = new JPanel();
-		painelManterUsuarios.setLayout(new MigLayout("", "[123px,grow][]", "[19px][grow]"));
+		contentPane.add(painelManterUsuarios, BorderLayout.CENTER);
+		painelManterUsuarios.setLayout(new MigLayout("", "[123px,grow]", "[19px][grow]"));
 
 		JToolBar toolBar_1 = new JToolBar();
 		painelManterUsuarios.add(toolBar_1, "cell 0 0,growx,aligny top");
@@ -116,11 +121,15 @@ public class InterfaceDeAdministrador extends JFrame {
 		JButton btnCriarUsuario = new JButton("Criar usuario");
 		btnCriarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (painelCriarUsuario == null){
-					painelCriarUsuario();
-				} else {
-					painelCriarUsuario.setVisible(true);
-				}
+				if (painelAtualizarUsuario != null){
+					painelAtualizarUsuario.setVisible(false);
+				} if (painelConsultarUsuarios != null) {
+					painelConsultarUsuarios.setVisible(false);
+				} if (painelExcluirUsuario != null){
+					painelExcluirUsuario.setVisible(false);
+				} 
+				
+				painelCriarUsuario();
 
 			}
 		});
@@ -129,11 +138,15 @@ public class InterfaceDeAdministrador extends JFrame {
 		JButton btnNewButton = new JButton("Consultar usuarios");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (painelConsultarUsuarios == null){
-					painelConsultarUsuarios();
-				} else {
-					painelConsultarUsuarios.setVisible(true);
-				}				
+				if (painelAtualizarUsuario != null){
+					painelAtualizarUsuario.setVisible(false);
+				} if (painelCriarUsuario != null) {
+					painelCriarUsuario.setVisible(false);
+				} if (painelExcluirUsuario != null){
+					painelExcluirUsuario.setVisible(false);
+				} 
+				
+				painelConsultarUsuarios();			
 			}
 		});
 		toolBar_1.add(btnNewButton);
@@ -141,21 +154,39 @@ public class InterfaceDeAdministrador extends JFrame {
 		JButton btnAlterarUsuario = new JButton("Excluir usuario");
 		btnAlterarUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (painelExcluirUsuario == null){
-					painelExcluirUsuario();
-				} else {
-					painelExcluirUsuario.setVisible(true);
-				}
+				if (painelAtualizarUsuario != null){
+					painelAtualizarUsuario.setVisible(false);
+				} if (painelCriarUsuario != null) {
+					painelCriarUsuario.setVisible(false);
+				} if (painelConsultarUsuarios != null){
+					painelConsultarUsuarios.setVisible(false);
+				} 
+				
+				painelExcluirUsuario();
+				
 			}
 		});
 		toolBar_1.add(btnAlterarUsuario);
 
 		JButton btnAtualizarUsuario = new JButton("Atualizar usuario");
 		toolBar_1.add(btnAtualizarUsuario);
+		btnAtualizarUsuario.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (painelExcluirUsuario != null){
+					painelExcluirUsuario.setVisible(false);
+				} if (painelCriarUsuario != null) {
+					painelCriarUsuario.setVisible(false);
+				} if (painelConsultarUsuarios != null){
+					painelConsultarUsuarios.setVisible(false);
+				} 
+				
+				painelAtualizarUsuario();
+				
+			}
+		});
 
-		contentPane.add(painelManterUsuarios, BorderLayout.CENTER);
-		contentPane.setVisible(false);
-		contentPane.setVisible(true);			
 	}
 
 	public void painelCriarUsuario(){
