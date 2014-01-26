@@ -12,13 +12,6 @@ public class Administrador extends Usuario {
 
 	}
 	
-	public Administrador(String nome, String departamento, String senha) {
-		setNome(nome);
-		setDepartamento(departamento);
-		setSenha(senha);
-	}
-	
-	
 	@Override
 	public void salvarDados() {
 		Banco.getInstance().salvarUsuario(this);
