@@ -2,7 +2,6 @@ package negocios;
 
 import javax.persistence.Entity;
 
-import persistencia.Banco;
 
 @Entity
 public class Cliente extends Usuario {
@@ -14,6 +13,8 @@ public class Cliente extends Usuario {
 	@Override
 	public void salvarDados() {
 		// aqui vai socket?
+		SocketClient sc = new SocketClient();
+		sc.salvarCliente(this);
 		
 	}
 }

@@ -60,6 +60,8 @@ public class InterfaceUsuario {
 	{		
 		Fachada.getInstance().atualizarUsuario(codigo, nome, departamento);
 		
+		JOptionPane.showMessageDialog(null, "Usuário atualizado com sucesso, novos dados: \n" + Fachada.getInstance().consultarUsuario(codigo));
+		
 	}
 		
 	public static int autenticacao(String usuario, String senha)
