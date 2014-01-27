@@ -227,8 +227,24 @@ public class InterfaceDeAdministrador extends JFrame {
 
 		painelManterUsuarios.add(btnAtualizarUsuario, grid);
 
+		grid.gridx = 1;
+		grid.gridy = 2;
+		
+		JButton botaoVoltarManterUsr = new JButton("Voltar");
+		botaoVoltarManterUsr.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				painelManterUsuarios.setVisible(false);
+				
+				painelPrincipal.setVisible(true);
+			}
+		});
+		
+		painelManterUsuarios.add(botaoVoltarManterUsr, grid);
+		
 		this.add(BorderLayout.BEFORE_FIRST_LINE, painelManterUsuarios);
-
+		
 
 	}
 
