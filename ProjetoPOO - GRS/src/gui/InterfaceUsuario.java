@@ -13,63 +13,7 @@ public class InterfaceUsuario {
 	private static boolean sistemaLogado;
 	
 	//1 para Administrador e 2 para cliente
-	private static int tipoUsuario;
-	
-		public static void menuOpcoes() { 
-			
-		int menuOpcoes = Integer.parseInt(JOptionPane.showInputDialog("1 - Manter requisição\n"
-				+ "2 - Manter usuário\n"
-				+ "3 - Vazar ").toString());
-		
-		switch (menuOpcoes) {
-		case 1:
-			break;
-		case 2:
-			manterUsuario();
-			break;
-		case 3:
-			int opcLogOut = JOptionPane.showConfirmDialog(null, "Voc� est� prestes a deslogar do sistema... Caso queira continuar, selecione a op��o \"Yes\".\n");
-			if (opcLogOut == JOptionPane.YES_OPTION)
-				System.exit(1);
-			else
-				menuOpcoes();
-		default:
-			JOptionPane.showMessageDialog(null, "Algo esta errado. Por favor, tente novamente.");
-			menuOpcoes();
-			break;
-		}
-	}
-	
-	public static void menuCliente(){
-		
-		int menuCliente = Integer.parseInt(JOptionPane.showInputDialog("1 - Enviar requisicaoo\n"
-				+ "2 - Consultar requisicao\n"
-				+ "3 - Criar conta\n"
-				+ "4 - Consultar Usuario\n"
-				+ "5 - Sair... ").toString());
-		
-		switch (menuCliente) {
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
-		case 5:
-			int opcLogOut = JOptionPane.showConfirmDialog(null, "Voce esta prestes a deslogar do sistema... Caso queira continuar, selecione a opcao \"Yes\".\n");
-			if (opcLogOut == JOptionPane.YES_OPTION)
-				System.exit(1);
-			else
-				menuCliente();
-		default:
-			JOptionPane.showMessageDialog(null, "Algo esta errado. Por favor, tente novamente.");
-			menuCliente();
-			break;
-		}
-	}
-	
+	private static int tipoUsuario;	
 		
 	public static void enviarRequisicao(String descricao, int tipoReq, int prazo, int codigo)
 	{
@@ -89,31 +33,7 @@ public class InterfaceUsuario {
 		String requisicoes = Fachada.getInstance().consultarRequisicoes(tipoReq);
 		JOptionPane.showMessageDialog(null, "Requisições para esse tipo: \n"+requisicoes);
 	}
-		
-	public static void manterUsuario()
-	{
-		
-		int opcaoManterUsuario = Integer.parseInt(JOptionPane.showInputDialog(null, "\t\tManter Usuario\t\t\n\n"
-				+ "1 - Criar usuario\n"
-				+ "2 - Consultar usuarios\n"
-				+ "3 - Excluir usuario\n"
-				+ "4 - Atualizar usuario\n").toString());	
-		
-		switch (opcaoManterUsuario) {
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			excluirUsuario();
-			break;
-		case 4:
-			break;
-		default:
-			break;
-		}	
-	}
-		
+			
 	public static void criarUsuario(String nome, String departamento, String senha)
 	{
 		Fachada.getInstance().criarUsuario(nome, departamento, senha);
@@ -126,13 +46,12 @@ public class InterfaceUsuario {
 		JOptionPane.showMessageDialog(null, "Usuarios encontrados com esse nome: \n" + (usuarios.equals("") ? 0 : usuarios));
 	}
 		
-	public static void excluirUsuario()
+	public static void excluirUsuario(int codigo)
 	{
-		String codigoS = JOptionPane.showInputDialog("Digite o codigo do usuario a ser excluído: ");
-		
-		int codigo = Integer.parseInt(codigoS);
-		
+
 		Fachada.getInstance().excluirUsuario(codigo);
+		
+		JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso!");
 		
 	}
 		
@@ -158,6 +77,16 @@ public class InterfaceUsuario {
 			}
 			
 		return autenticou;
+	}
+	
+	public static void verificaUsuario(int codigo){
+		
+		if (Fachada.getInstance().consultarUsuario(codigo) == null){
+			JOptionPane.showMessageDialog(null, "Usuário inválido!");
+		} else {
+			JOptionPane.showMessageDialog(null, "Usuário válido!");
+		}
+		
 	}
 	
 }
