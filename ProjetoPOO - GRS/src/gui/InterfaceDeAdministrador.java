@@ -56,8 +56,8 @@ public class InterfaceDeAdministrador extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void executar(int codigo) {
-		codigoUsuario = codigo;
+	public static void main(String args[]) {
+		//codigoUsuario = codigo;
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -165,6 +165,7 @@ public class InterfaceDeAdministrador extends JFrame {
 					painelExcluirUsuario.setVisible(false);
 				} 
 				
+				painelManterUsuarios.setVisible(false);
 				painelConsultarUsuarios();			
 			}
 		});
@@ -182,6 +183,7 @@ public class InterfaceDeAdministrador extends JFrame {
 					painelConsultarUsuarios.setVisible(false);
 				} 
 				
+				painelManterUsuarios.setVisible(false);
 				painelExcluirUsuario();
 				
 			}
@@ -205,6 +207,7 @@ public class InterfaceDeAdministrador extends JFrame {
 					painelConsultarUsuarios.setVisible(false);
 				} 
 				
+				painelManterUsuarios.setVisible(false);
 				painelAtualizarUsuario();
 				
 			}
@@ -274,89 +277,132 @@ public class InterfaceDeAdministrador extends JFrame {
 	public void painelConsultarUsuarios(){
 
 		painelConsultarUsuarios = new JPanel();
-		painelConsultarUsuarios.setLayout(new MigLayout("", "[][][grow][]", "[][]"));
+		painelConsultarUsuarios.setBorder(BorderFactory.createTitledBorder("Consultar usuários"));
+		painelConsultarUsuarios.setLayout(new GridBagLayout());
 
+		GridBagConstraints grid = new GridBagConstraints();
+		grid.insets = new Insets(4, 4, 4, 4);
+		
+		grid.gridx = 0;
+		grid.gridy = 0;
 		JLabel lblNome_1 = new JLabel("Nome: ");
-		painelConsultarUsuarios.add(lblNome_1, "cell 0 0,alignx trailing");
+		painelConsultarUsuarios.add(lblNome_1, grid);
 
+		grid.gridx = 1;
+		grid.gridy = 0;
 		textField_3 = new JTextField();
-		painelConsultarUsuarios.add(textField_3, "cell 1 0,growx");
+		painelConsultarUsuarios.add(textField_3, grid);
 		textField_3.setColumns(10);
 
+		grid.gridx = 1;
+		grid.gridy = 1;
 		JButton botaoConsultar = new JButton("Consultar");
-		painelConsultarUsuarios.add(botaoConsultar, "cell 1 1,alignx center");
+		painelConsultarUsuarios.add(botaoConsultar, grid);
 
-		painelManterUsuarios.add(painelConsultarUsuarios, "cell 0 1,grow");
-		painelManterUsuarios.setVisible(false);
-		painelManterUsuarios.setVisible(true);
+		this.add(BorderLayout.BEFORE_FIRST_LINE, painelConsultarUsuarios);
+		
 	}
 
 	public void painelExcluirUsuario(){
 
 		painelExcluirUsuario = new JPanel();
-		painelExcluirUsuario.setLayout(new MigLayout("", "[][][][grow][]", "[][]"));
+		painelExcluirUsuario.setBorder(BorderFactory.createTitledBorder("Excluir usuário"));
+		painelExcluirUsuario.setLayout(new GridBagLayout());
 
+		GridBagConstraints grid = new GridBagConstraints();
+		grid.insets = new Insets(4, 4, 4, 4);
+		
+		grid.gridx = 0;
+		grid.gridy = 0;
+		
 		JLabel lblCdigo = new JLabel("Código: ");
-		painelExcluirUsuario.add(lblCdigo, "cell 0 0,alignx trailing");
+		painelExcluirUsuario.add(lblCdigo, grid);
 
+		grid.gridx = 1;
+		grid.gridy = 0;
+		
 		textField_4 = new JTextField();
-		painelExcluirUsuario.add(textField_4, "cell 1 0,growx");
+		painelExcluirUsuario.add(textField_4, grid);
 		textField_4.setColumns(10);
 
+		grid.gridx = 2;
+		grid.gridy = 0;
 		JButton btnVerificar = new JButton("Verificar");
-		painelExcluirUsuario.add(btnVerificar, "cell 2 0");
+		painelExcluirUsuario.add(btnVerificar, grid);
 
+		grid.gridx = 1;
+		grid.gridy = 1;
 		JButton btnExcluir = new JButton("Excluir");
-		painelExcluirUsuario.add(btnExcluir, "cell 1 1,alignx center");
+		painelExcluirUsuario.add(btnExcluir, grid);
 
-		painelManterUsuarios.add(painelExcluirUsuario, "cell 0 1,grow");
-		painelManterUsuarios.setVisible(false);
-		painelManterUsuarios.setVisible(true);
+		this.add(BorderLayout.BEFORE_FIRST_LINE, painelExcluirUsuario);
 
 	}
 
 	public void painelAtualizarUsuario(){
 
 		painelAtualizarUsuario = new JPanel();
-		painelAtualizarUsuario.setLayout(new MigLayout("", "[][][grow][]", "[][][][][]"));
+		painelAtualizarUsuario.setBorder(BorderFactory.createTitledBorder("Excluir usuário"));
+		painelAtualizarUsuario.setLayout(new GridBagLayout());
 
+		GridBagConstraints grid = new GridBagConstraints();
+		grid.insets = new Insets(4, 4, 4, 4);
+		
+		grid.gridx = 0;
+		grid.gridy = 0;
 		JLabel lblCdigo_1 = new JLabel("Código:");
-		painelAtualizarUsuario.add(lblCdigo_1, "cell 0 0,alignx trailing");
+		painelAtualizarUsuario.add(lblCdigo_1, grid);
 
+		grid.gridx = 1;
+		grid.gridy = 0;
 		textField_5 = new JTextField();
-		painelAtualizarUsuario.add(textField_5, "cell 1 0,alignx center");
+		painelAtualizarUsuario.add(textField_5, grid);
 		textField_5.setColumns(10);
 
+		grid.gridx = 2;
+		grid.gridy = 0;
 		JButton btnVerificar_1 = new JButton("Verificar");
-		painelAtualizarUsuario.add(btnVerificar_1, "cell 2 0");
+		painelAtualizarUsuario.add(btnVerificar_1, grid);
 
+		grid.gridx = 0;
+		grid.gridy = 1;
 		JLabel lblNome_2 = new JLabel("Nome: ");
-		painelAtualizarUsuario.add(lblNome_2, "cell 0 1,alignx trailing");
+		painelAtualizarUsuario.add(lblNome_2, grid);
 
+		grid.gridx = 1;
+		grid.gridy = 1;
 		textField_6 = new JTextField();
-		painelAtualizarUsuario.add(textField_6, "cell 1 1,alignx center");
+		painelAtualizarUsuario.add(textField_6, grid);
 		textField_6.setColumns(10);
-
+		
+		grid.gridx = 0;
+		grid.gridy = 2;
 		JLabel lblDepartamento_1 = new JLabel("Departamento:");
-		painelAtualizarUsuario.add(lblDepartamento_1, "cell 0 2,alignx trailing");
-
+		painelAtualizarUsuario.add(lblDepartamento_1, grid);
+		
+		grid.gridx = 1;
+		grid.gridy = 2;
 		textField_7 = new JTextField();
-		painelAtualizarUsuario.add(textField_7, "cell 1 2,alignx center");
+		painelAtualizarUsuario.add(textField_7, grid);
 		textField_7.setColumns(10);
-
+		
+		grid.gridx = 0;
+		grid.gridy = 3;
 		JLabel lblSenha_1 = new JLabel("Senha");
-		painelAtualizarUsuario.add(lblSenha_1, "cell 0 3,alignx trailing");
+		painelAtualizarUsuario.add(lblSenha_1, grid);
 
+		grid.gridx = 1;
+		grid.gridy = 3;
 		textField_8 = new JTextField();
-		painelAtualizarUsuario.add(textField_8, "cell 1 3,alignx center");
+		painelAtualizarUsuario.add(textField_8, grid);
 		textField_8.setColumns(10);
 
+		grid.gridx = 1;
+		grid.gridy = 4;
 		JButton btnConfirmar = new JButton("Confirmar");
-		painelAtualizarUsuario.add(btnConfirmar, "cell 1 4");
+		painelAtualizarUsuario.add(btnConfirmar, grid);
 
-		painelManterUsuarios.add(painelAtualizarUsuario, "cell 0 1,grow");
-		painelManterUsuarios.setVisible(false);
-		painelManterUsuarios.setVisible(true);
+		this.add(BorderLayout.BEFORE_FIRST_LINE, painelAtualizarUsuario);
 
 	}
 	
