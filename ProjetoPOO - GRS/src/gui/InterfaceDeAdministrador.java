@@ -56,8 +56,8 @@ public class InterfaceDeAdministrador extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String args[]) {
-		//codigoUsuario = codigo;
+	public static void executar(int codigo) {
+		codigoUsuario = codigo;
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

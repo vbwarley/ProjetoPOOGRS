@@ -148,11 +148,11 @@ public class interfaceLoginCadastro extends JFrame {
 				int tipoUsuario = InterfaceUsuario.autenticacao(nomeText.getText(), senhaText.getText());
 				
 				if (tipoUsuario == 1) {
-					//InterfaceDeAdministrador.executar(tipoUsuario);
-					System.exit(0);
+					InterfaceDeAdministrador.executar(tipoUsuario);
+					
 				} else if (tipoUsuario >= 2){
 					InterfaceDeCliente.executar(tipoUsuario);
-					System.exit(0);
+					
 				}
 				
 			}

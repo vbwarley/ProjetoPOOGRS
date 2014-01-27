@@ -55,6 +55,7 @@ public class Fachada {
                 
                 usuario.setNome(nome);
                 usuario.setSenha(senha);
+                usuario.setDepartamento(departamento);
                 
                 usuario.salvarDados();
         }
