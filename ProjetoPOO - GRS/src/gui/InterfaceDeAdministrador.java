@@ -3,6 +3,9 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,6 +14,7 @@ import javax.swing.JToolBar;
 
 import net.miginfocom.swing.MigLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -25,7 +29,7 @@ import java.awt.FlowLayout;
 
 public class InterfaceDeAdministrador extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel painelPrincipal;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -52,8 +56,8 @@ public class InterfaceDeAdministrador extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void executar(int codigo) {
-		codigoUsuario = codigo;
+	public static void main(String args[]) {
+		//codigoUsuario = codigo;
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -74,13 +78,15 @@ public class InterfaceDeAdministrador extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 540, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-
-		JToolBar toolBar = new JToolBar();
-		contentPane.add(toolBar, BorderLayout.NORTH);
+		painelPrincipal = new JPanel();
+		painelPrincipal.setBorder(BorderFactory.createTitledBorder("Menu"));
+		painelPrincipal.setLayout(new GridBagLayout());
+		
+		GridBagConstraints grid = new GridBagConstraints();
+		grid.insets = new Insets(4, 4, 4, 4);
+		
+		grid.gridx = 0;
+		grid.gridy = 0;
 
 		JButton btnManterUsuario = new JButton("Manter usuarios");
 		btnManterUsuario.addActionListener(new ActionListener() {
@@ -89,11 +95,16 @@ public class InterfaceDeAdministrador extends JFrame {
 					painelManterRequisicao.setVisible(false);
 				} 
 				
+				painelPrincipal.setVisible(false);
+				
 				painelManterUsuarios();
 			}
 		});
-		toolBar.add(btnManterUsuario);
+		painelPrincipal.add(btnManterUsuario, grid);
 
+		
+		grid.gridx = 1;
+		grid.gridy = 0;
 		JButton btnManterRequisio = new JButton("Manter requisições");
 		btnManterRequisio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -104,19 +115,23 @@ public class InterfaceDeAdministrador extends JFrame {
 				painelManterRequisicao();
 			}
 		});
-		toolBar.add(btnManterRequisio);
+		painelPrincipal.add(btnManterRequisio, grid);
 
+		this.add(BorderLayout.BEFORE_FIRST_LINE, painelPrincipal);
 						
 	}
 	
 	public void painelManterUsuarios(){
 
 		painelManterUsuarios = new JPanel();
-		contentPane.add(painelManterUsuarios, BorderLayout.CENTER);
-		painelManterUsuarios.setLayout(new MigLayout("", "[123px,grow]", "[19px][grow]"));
+		painelManterUsuarios.setBorder(BorderFactory.createTitledBorder("Manter usuarios"));
+		painelManterUsuarios.setLayout(new GridBagLayout());
+		
+		GridBagConstraints grid = new GridBagConstraints();
+		grid.insets = new Insets(4, 4, 4, 4);
 
-		JToolBar toolBar_1 = new JToolBar();
-		painelManterUsuarios.add(toolBar_1, "cell 0 0,growx,aligny top");
+		grid.gridx = 0;
+		grid.gridy = 0;
 
 		JButton btnCriarUsuario = new JButton("Criar usuario");
 		btnCriarUsuario.addActionListener(new ActionListener() {
@@ -129,12 +144,16 @@ public class InterfaceDeAdministrador extends JFrame {
 					painelExcluirUsuario.setVisible(false);
 				} 
 				
+				painelManterUsuarios.setVisible(false);
 				painelCriarUsuario();
 
 			}
 		});
-		toolBar_1.add(btnCriarUsuario);
+		painelManterUsuarios.add(btnCriarUsuario, grid);
 
+		grid.gridx = 1;
+		grid.gridy = 0;
+		
 		JButton btnNewButton = new JButton("Consultar usuarios");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -149,7 +168,8 @@ public class InterfaceDeAdministrador extends JFrame {
 				painelConsultarUsuarios();			
 			}
 		});
-		toolBar_1.add(btnNewButton);
+		
+		painelManterUsuarios.add(btnNewButton, grid);
 
 		JButton btnAlterarUsuario = new JButton("Excluir usuario");
 		btnAlterarUsuario.addActionListener(new ActionListener() {
@@ -166,10 +186,13 @@ public class InterfaceDeAdministrador extends JFrame {
 				
 			}
 		});
-		toolBar_1.add(btnAlterarUsuario);
+		
+		grid.gridx = 0;
+		grid.gridy = 1;
+		
+		painelManterUsuarios.add(btnAlterarUsuario, grid);
 
 		JButton btnAtualizarUsuario = new JButton("Atualizar usuario");
-		toolBar_1.add(btnAtualizarUsuario);
 		btnAtualizarUsuario.addActionListener(new ActionListener() {
 			
 			@Override
@@ -186,41 +209,66 @@ public class InterfaceDeAdministrador extends JFrame {
 				
 			}
 		});
-
+		
+		grid.gridx = 1;
+		grid.gridy = 1;
+		
+		painelManterUsuarios.add(btnAtualizarUsuario, grid);
+		
+		this.add(BorderLayout.BEFORE_FIRST_LINE, painelManterUsuarios);
+		
+		
 	}
 
 	public void painelCriarUsuario(){
 
 		painelCriarUsuario = new JPanel();
-		painelCriarUsuario.setLayout(new MigLayout("", "[][][grow][grow]", "[][][][]"));
+		painelCriarUsuario.setBorder(BorderFactory.createTitledBorder("Criar usuário"));
+		painelCriarUsuario.setLayout(new GridBagLayout());
 
+		GridBagConstraints grid = new GridBagConstraints();
+		grid.insets = new Insets(4, 4, 4, 4);
+		
+		grid.gridx = 0;
+		grid.gridy = 2;
+		
 		JLabel lblNome = new JLabel("Nome: ");
-		painelCriarUsuario.add(lblNome, "cell 0 0,alignx center");
+		painelCriarUsuario.add(lblNome, grid);
 
+		grid.gridx = 1;
+		grid.gridy = 2;
 		textField = new JTextField();
-		painelCriarUsuario.add(textField, "cell 1 0,alignx center");
+		painelCriarUsuario.add(textField, grid);
 		textField.setColumns(10);
 
+		grid.gridx = 0;
+		grid.gridy = 3;	
 		JLabel lblSenha = new JLabel("Senha: ");
-		painelCriarUsuario.add(lblSenha, "cell 0 1,alignx center");
+		painelCriarUsuario.add(lblSenha, grid);
 
+		grid.gridx = 1;
+		grid.gridy = 3;
 		textField_1 = new JTextField();
-		painelCriarUsuario.add(textField_1, "cell 1 1,alignx center");
+		painelCriarUsuario.add(textField_1, grid);
 		textField_1.setColumns(10);
 
+		grid.gridx = 0;
+		grid.gridy = 4;
 		JLabel lblDepartamento = new JLabel("Departamento:");
-		painelCriarUsuario.add(lblDepartamento, "cell 0 2,alignx trailing");
+		painelCriarUsuario.add(lblDepartamento, grid);
 
+		grid.gridx = 1;
+		grid.gridy = 4;
 		textField_2 = new JTextField();
-		painelCriarUsuario.add(textField_2, "cell 1 2,alignx center");
+		painelCriarUsuario.add(textField_2, grid);
 		textField_2.setColumns(10);
 
+		grid.gridx = 1;
+		grid.gridy = 5;
 		JButton botaoCriarUsuario = new JButton("Criar");
-		painelCriarUsuario.add(botaoCriarUsuario, "cell 1 3,alignx center");
+		painelCriarUsuario.add(botaoCriarUsuario, grid);
 
-		painelManterUsuarios.add(painelCriarUsuario, "cell 0 1,grow");
-		painelManterUsuarios.setVisible(false);
-		painelManterUsuarios.setVisible(true);
+		this.add(BorderLayout.BEFORE_FIRST_LINE, painelCriarUsuario);
 	}
 
 	public void painelConsultarUsuarios(){
@@ -315,7 +363,7 @@ public class InterfaceDeAdministrador extends JFrame {
 	public void painelManterRequisicao(){
 		
 		painelManterRequisicao = new JPanel();
-		contentPane.add(painelManterRequisicao, BorderLayout.CENTER);
+		painelPrincipal.add(painelManterRequisicao, BorderLayout.CENTER);
 		painelManterRequisicao.setLayout(new MigLayout("", "[123px,grow]", "[19px][grow]"));
 
 		JToolBar toolBar_1 = new JToolBar();

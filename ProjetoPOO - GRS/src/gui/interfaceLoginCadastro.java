@@ -77,7 +77,6 @@ public class interfaceLoginCadastro extends JFrame {
 	 * Create the frame.
 	 */
 	public interfaceLoginCadastro() {
-	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("SGRS - DourLey");
 		setBounds(100, 100, 450, 300);
@@ -116,9 +115,6 @@ public class interfaceLoginCadastro extends JFrame {
 		});
 		toolBar.add(btnCadastro);
 		
-		
-		painelLogin = new JPanel();
-		
 	}
 	
 	public void painelLogin(){
@@ -152,7 +148,7 @@ public class interfaceLoginCadastro extends JFrame {
 				int tipoUsuario = InterfaceUsuario.autenticacao(nomeText.getText(), senhaText.getText());
 				
 				if (tipoUsuario == 1) {
-					InterfaceDeAdministrador.executar(tipoUsuario);
+					//InterfaceDeAdministrador.executar(tipoUsuario);
 					System.exit(0);
 				} else if (tipoUsuario >= 2){
 					InterfaceDeCliente.executar(tipoUsuario);
