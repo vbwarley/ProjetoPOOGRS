@@ -30,29 +30,35 @@ import java.awt.FlowLayout;
 
 public class InterfaceDeAdministrador extends JFrame {
 
+	//Paineis
 	private JPanel painelPrincipal;
+	private JPanel painelCriarUsuario;
+	private JPanel painelManterUsuarios;
+	private JPanel painelConsultarUsuarios;
+	private JPanel painelExcluirUsuario;
+	private JPanel painelAtualizarUsuario;
+	private JPanel painelManterRequisicao;
+	private JPanel painelEnviarRequisicao;
+	private JPanel painelConsultarRequisicao;
+	
+	//Campos de texto
 	private JTextField nomeText;
 	private JTextField senhaText;
 	private JTextField departamentoText;
-	private JPanel painelCriarUsuario;
-	private JPanel painelManterUsuarios;
 	private JTextField nomeConsultarText;
-	private JPanel painelConsultarUsuarios;
 	private JTextField codigoExcluirText;
-	private JPanel painelExcluirUsuario;
 	private JTextField codigoAtualizarUsuarioText;
 	private JTextField nomeAtualizarText;
 	private JTextField departamentoAtualizarText;
-	private JPanel painelAtualizarUsuario;
 	private JTextField descricaoEnviarText;
 	private JTextField prazoText;
-	private JPanel painelManterRequisicao;
-	private JPanel painelEnviarRequisicao;
-	private JTextField textField_11;
-	private JPanel painelConsultarRequisicao;
+	private JTextField dataText;
+	
+	//ComboBoxes
 	private JComboBox tipoRequisicaoCB;
+	private JComboBox tipoDeConsultaRequsicaoCB;
 
-
+	//codigoUsuario, usado para identificar o usuário que se logou na primeira interface
 	private static int codigoUsuario;
 
 	/**
@@ -221,8 +227,24 @@ public class InterfaceDeAdministrador extends JFrame {
 
 		painelManterUsuarios.add(btnAtualizarUsuario, grid);
 
+		grid.gridx = 1;
+		grid.gridy = 2;
+		
+		JButton botaoVoltarManterUsr = new JButton("Voltar");
+		botaoVoltarManterUsr.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				painelManterUsuarios.setVisible(false);
+				
+				painelPrincipal.setVisible(true);
+			}
+		});
+		
+		painelManterUsuarios.add(botaoVoltarManterUsr, grid);
+		
 		this.add(BorderLayout.BEFORE_FIRST_LINE, painelManterUsuarios);
-
+		
 
 	}
 
@@ -600,9 +622,9 @@ public class InterfaceDeAdministrador extends JFrame {
 
 		grid.gridx = 1;
 		grid.gridy = 0;
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Data", "Tipo de requisição"}));
-		painelConsultarRequisicao.add(comboBox, grid);
+		tipoDeConsultaRequsicaoCB = new JComboBox();
+		tipoDeConsultaRequsicaoCB.setModel(new DefaultComboBoxModel(new String[] {"Data", "Tipo de requisição"}));
+		painelConsultarRequisicao.add(tipoDeConsultaRequsicaoCB, grid);
 
 		grid.gridx = 0;
 		grid.gridy = 1;
@@ -611,9 +633,9 @@ public class InterfaceDeAdministrador extends JFrame {
 
 		grid.gridx = 1;
 		grid.gridy = 1;
-		textField_11 = new JTextField();
-		painelConsultarRequisicao.add(textField_11, grid);
-		textField_11.setColumns(10);
+		dataText = new JTextField();
+		painelConsultarRequisicao.add(dataText, grid);
+		dataText.setColumns(10);
 
 		grid.gridx = 0;
 		grid.gridy = 2;
@@ -630,7 +652,33 @@ public class InterfaceDeAdministrador extends JFrame {
 		grid.gridy = 3;
 		JButton btnConsultar = new JButton("Consultar");
 		painelConsultarRequisicao.add(btnConsultar, grid);
+		btnConsultar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if (tipoDeConsultaRequsicaoCB.getSelectedItem().equals("Data")){
+					InterfaceUsuario.consultarRequisicao(dataText.getText());
+				} else if (tipoDeConsultaRequsicaoCB.getSelectedItem().equals("Tipo de requisição")){
+					int codigoTipoRequisicao = 1;
 
+					if (tipoRequisicaoCB.getSelectedItem().equals("Ajuda")){
+						codigoTipoRequisicao = 1;
+					} else if (tipoRequisicaoCB.getSelectedItem().equals("Manutenção")){
+						codigoTipoRequisicao = 2;
+					} else if (tipoRequisicaoCB.getSelectedItem().equals("Suporte")){
+						codigoTipoRequisicao = 3;
+					} else if (tipoRequisicaoCB.getSelectedItem().equals("Aumento de banda da Internet")){
+						codigoTipoRequisicao = 4;
+					}					
+					
+					InterfaceUsuario.consultarRequisicao(codigoTipoRequisicao);
+					
+				}
+				
+			}
+		});
+		
 		this.add(BorderLayout.BEFORE_FIRST_LINE, painelConsultarRequisicao);
 
 	}
