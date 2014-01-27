@@ -1,5 +1,8 @@
 package negocios;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -18,6 +21,7 @@ public class Requisicao {
 	@Enumerated(EnumType.STRING)
 	private TipoRequisicao tipoRequisicao;
 	private int prazo;
+	private Date data;
 	
 	@ManyToOne
 	private Usuario usuario;
@@ -33,6 +37,7 @@ public class Requisicao {
 		this.tipoRequisicao = tipoRequisicao;
 		this.prazo = prazo;
 		this.usuario = usuario;
+		this.data = new Date(Calendar.getInstance().getTimeInMillis());
 	}
 	
 //	public String salvarRequisicao() {
