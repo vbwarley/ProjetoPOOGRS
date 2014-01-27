@@ -36,15 +36,16 @@ public class Banco {
 		query.setParameter("nome", nomeUsuario);
 		query.setParameter("senha", senha);
 	
-		Usuario u = null;
+		List<Usuario> u = null;
 		
 		try {
-			u = (Usuario) query.getSingleResult();
+			u = query.getResultList();
 		} catch (NoResultException e) {
-			throw new AutenticarException("Não foi possível autenticar.");
+			throw new AutenticarException("Não foi possível autenticar.\n"
+					+ "Nome ou senha não encontrados!");
 		}
 		
-		return u;
+		return u.get(0);
 	}
 	
 	public void salvarUsuario(Usuario usuario) throws UsuarioException {		
