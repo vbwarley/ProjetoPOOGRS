@@ -32,7 +32,6 @@ public class Fachada {
 
 	public String consultarRequisicoes(Date data) {
 		return Usuario.consultarRequisicao(data);
-
 	}
 
 	// essa implementação precisa ficar aqui mesmo

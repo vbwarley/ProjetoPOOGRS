@@ -1,6 +1,5 @@
 package testes;
 
-
 import static junit.framework.Assert.*;
 import negocios.Administrador;
 import negocios.Cliente;
@@ -8,12 +7,19 @@ import negocios.Fachada;
 import negocios.Requisicao;
 import negocios.Usuario;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class UsuarioTeste {
-
-	Usuario a = new Administrador();
-	Cliente c = new Cliente();
+	  
+	private Usuario a;
+	private Usuario c;
+	
+	@Before
+	public void setUp() throws Exception{
+		a = new Administrador();
+		c = new Cliente();
+	}
 	
 	@Test
 	public void testSalvarAdministrador() {
@@ -25,6 +31,7 @@ public class UsuarioTeste {
 
 	@Test
 	public void testEnviarRequisicao() {
+		c.salvarDados();
 		Requisicao r = new Requisicao();
 		r.setDescricao("Teste");
 		a.enviarRequisicao(r);
