@@ -125,6 +125,23 @@ public class InterfaceDeAdministrador extends JFrame {
 			}
 		});
 		painelPrincipal.add(btnManterRequisio, grid);
+		
+		grid.gridx = 2;
+		grid.gridy = 0;
+		JButton sair = new JButton("Sair");
+		sair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String[] args = new String[0];
+				
+				interfaceLoginCadastro.main(args);
+				JOptionPane.showMessageDialog(null, "Saindo da interface de Administrador");
+				dispose();
+			}
+		});
+		
+		
+		painelPrincipal.add(sair, grid);
 
 		this.add(BorderLayout.BEFORE_FIRST_LINE, painelPrincipal);
 

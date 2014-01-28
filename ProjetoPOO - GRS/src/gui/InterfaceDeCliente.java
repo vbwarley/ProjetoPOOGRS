@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellEditor;
@@ -125,6 +126,18 @@ public class InterfaceDeCliente extends JFrame {
 			}
 		});
 		toolBar.add(btnConsultarUsurio);
+		
+		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String[] args = new String[0];
+				
+				interfaceLoginCadastro.main(args);
+				JOptionPane.showMessageDialog(null, "Saindo da interface de cliente!");
+				dispose();
+			}
+		});
+		toolBar.add(btnSair);
 		
 		
 	}
