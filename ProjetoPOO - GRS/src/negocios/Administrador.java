@@ -16,6 +16,11 @@ public class Administrador extends Usuario {
 	public void salvarDados() {
 		Banco.getInstance().salvarUsuario(this);
 	}
+	
+	public void salvarDados(Usuario u) {
+		Banco.getInstance().salvarUsuario(u);
+	}
+	
 
 	public static void excluirUsuario(int codigo) {
 		Banco.getInstance().excluirUsuario(codigo);

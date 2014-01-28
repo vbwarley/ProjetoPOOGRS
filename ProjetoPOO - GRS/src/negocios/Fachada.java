@@ -57,12 +57,17 @@ public class Fachada {
                 usuario.setSenha(senha);
                 usuario.setDepartamento(departamento);
                 
-                usuario.salvarDados();
+                if (!usuario.getDepartamento().equalsIgnoreCase("CTI")) {
+                	new Administrador().salvarDados(usuario);
+                } else {
+                	usuario.salvarDados();
+                }
         }
         
         public String consultarUsuario(int codigo) {
-                
-                return Usuario.consultarUsuario(codigo).toString();
+            Usuario u = Usuario.consultarUsuario(codigo);
+        	String usuario = (u == null) ? null : u.toString();
+            return usuario;
         }
         
         public String consultarUsuario(String nomeUsuario) {
@@ -92,24 +97,10 @@ public class Fachada {
                                 
                 return codigo;
         }
-        
-        public String mostrarDetalhesUsuario(int codigo) {
-                return null;
-        }
-        
+          
         // adicionado
         public TipoRequisicao getTipoRequisicao(int codigo) {
                 return TipoRequisicao.values()[codigo-1];
-        }
-        
-        // adicionado
-        public String getTipoRequisicaoString() {
-                String tipos = "";
-                
-                for (int i = 0; i < TipoRequisicao.values().length; i++) 
-                        tipos += (i+1) + " " + TipoRequisicao.values()[i].toString() + "\n"; 
-                
-                return tipos;
         }
         
 }
