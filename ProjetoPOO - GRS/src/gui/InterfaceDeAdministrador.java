@@ -747,7 +747,12 @@ public class InterfaceDeAdministrador extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if (tipoDeConsultaRequsicaoCB.getSelectedItem().equals("Data")){
-					InterfaceUsuario.consultarRequisicao(dataText.getText());
+					
+					if (dataText.getText().isEmpty()){
+						JOptionPane.showMessageDialog(null, "Digite um valor válido para data! (aaaa-mm-dd) ");
+					} else {
+						InterfaceUsuario.consultarRequisicao(dataText.getText());
+					}
 				} else if (tipoDeConsultaRequsicaoCB.getSelectedItem().equals("Tipo de requisição")){
 					int codigoTipoRequisicao = 1;
 
