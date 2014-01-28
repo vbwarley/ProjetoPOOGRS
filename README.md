@@ -12,7 +12,11 @@ da sua normal utilização.
 <<aqui fica as bibliotecas usadas para a interface gráfica>> e, por fim, o conector JDBC para conexão com o tipo de banco
 dados (MySQL) forem previamente instaladas.
 
-- Algo mais?
+- É necessária a criação do banco de dados mysql nomeado de "grs". O sistema considera o primeiro registro como administrador do sistema, ou seja, o código 1 do usuário é equivalente ao do administrador. 
+
+- O usuário logado como administrador tem acesso total ao sistema, enquanto a interface de cliente apresenta apenas funcionalidades básicas.
+
+-É necessário que o usuário se registre para utilizar o sistema. Após o registro, o usuário deve ir na interface de login e digitar se nome e senha.
 
 
 
