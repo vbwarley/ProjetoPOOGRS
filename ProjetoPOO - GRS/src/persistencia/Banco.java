@@ -93,6 +93,8 @@ public class Banco {
 			manager.getTransaction().begin();
 			manager.remove(getInstance().consultarUsuario(codigo));
 			manager.getTransaction().commit();
+		} catch (IllegalArgumentException e) {
+			throw new UsuarioException("Usuário não encontrado!");
 		} catch (RuntimeException e) {
 			throw new UsuarioException("Erro ao tentar excluir usuário!");
 		}
