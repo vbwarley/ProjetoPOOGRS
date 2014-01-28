@@ -37,6 +37,7 @@ public class InterfaceUsuario {
 	public static void criarUsuario(String nome, String departamento, String senha)
 	{
 		Fachada.getInstance().criarUsuario(nome, departamento, senha);
+		JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
 	}
 		
 	public static void consultarUsuario(String nome)

@@ -2,7 +2,11 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -33,7 +37,7 @@ public class InterfaceDeCliente extends JFrame {
 	private static int codigoUsuario = 2;
 	
 	//Paineis
-	private JPanel contentPane;
+	private JPanel painelPrincipal;
 	private JPanel painelEnviarRequisicao;
 	private JPanel painelConsultarRequisicao;
 	private JPanel painelConsultarUsuario;
@@ -48,7 +52,6 @@ public class InterfaceDeCliente extends JFrame {
 	private JComboBox consultarRequisicaoCB;
 	private JComboBox enviarRequisicaoCB;
 	private JComboBox tipoConsultaCB;
-	private JTable usuariosEncontrados;
 		
 	/**
 	 * Launch the application.
@@ -75,15 +78,18 @@ public class InterfaceDeCliente extends JFrame {
 	public InterfaceDeCliente() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("SGRS - DourLey");
-		setBounds(100, 100, 515, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		setBounds(100, 100, 600, 300);
+		painelPrincipal = new JPanel();
+		painelPrincipal.setBorder(BorderFactory.createTitledBorder("Menu"));
+		painelPrincipal.setLayout(new GridBagLayout());
 		
-		JToolBar toolBar = new JToolBar();
-		contentPane.add(toolBar, BorderLayout.NORTH);
+		this.add(BorderLayout.BEFORE_FIRST_LINE, painelPrincipal);
 		
+		GridBagConstraints grid = new GridBagConstraints();
+		grid.insets = new Insets(4, 4, 4, 4);
+		
+		grid.gridx = 0;
+		grid.gridy = 0;
 		JButton btnEnviarRequisio = new JButton("Enviar requisição");
 		btnEnviarRequisio.addActionListener(new ActionListener() {
 			
@@ -92,13 +98,17 @@ public class InterfaceDeCliente extends JFrame {
 					painelConsultarRequisicao.setVisible(false);
 				} if (painelConsultarUsuario != null){
 					painelConsultarUsuario.setVisible(false);
-				}
+				} 
+				
+				painelPrincipal.setVisible(false);
 				
 				painelEnviarRequisicao();
 			}
 		});
-		toolBar.add(btnEnviarRequisio);
+		painelPrincipal.add(btnEnviarRequisio, grid);
 		
+		grid.gridx = 1;
+		grid.gridy = 0;
 		JButton btnConsultarRequisio = new JButton("Consultar requisição");
 		btnConsultarRequisio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -108,11 +118,14 @@ public class InterfaceDeCliente extends JFrame {
 					painelConsultarUsuario.setVisible(false);
 				}
 				
+				painelPrincipal.setVisible(false);
 				painelConsultarRequisicao();			
 			}
 		});
-		toolBar.add(btnConsultarRequisio);
-		
+		painelPrincipal.add(btnConsultarRequisio, grid);
+
+		grid.gridx = 0;
+		grid.gridy = 1;
 		JButton btnConsultarUsurio = new JButton("Consultar usuário");
 		btnConsultarUsurio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -122,11 +135,14 @@ public class InterfaceDeCliente extends JFrame {
 					painelConsultarRequisicao.setVisible(false);
 				}
 				
+				painelPrincipal.setVisible(false);
 				painelConsultarUsuario();
 			}
 		});
-		toolBar.add(btnConsultarUsurio);
+		painelPrincipal.add(btnConsultarUsurio, grid);
 		
+		grid.gridx = 1;
+		grid.gridy = 1;
 		JButton btnSair = new JButton("Sair");
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -137,7 +153,7 @@ public class InterfaceDeCliente extends JFrame {
 				dispose();
 			}
 		});
-		toolBar.add(btnSair);
+		painelPrincipal.add(btnSair, grid);
 		
 		
 	}
@@ -145,34 +161,52 @@ public class InterfaceDeCliente extends JFrame {
 	public void painelEnviarRequisicao(){
 		
 		painelEnviarRequisicao = new JPanel();
+		painelEnviarRequisicao.setBorder(BorderFactory.createTitledBorder("Enviar requisição"));
+		painelEnviarRequisicao.setLayout(new GridBagLayout());
 		
-		painelEnviarRequisicao.setLayout(new MigLayout("", "[70px][grow]", "[15px][][][]"));
+		GridBagConstraints grid = new GridBagConstraints();
+		grid.insets = new Insets(4, 4, 4, 4);
+		
+		grid.gridx = 0;
+		grid.gridy = 0;
 		
 		JLabel lblNewLabel = new JLabel("Descrição:");
-		painelEnviarRequisicao.add(lblNewLabel, "cell 0 1,alignx center,aligny center");
+		painelEnviarRequisicao.add(lblNewLabel, grid);
 		
+		grid.gridx = 1;
+		grid.gridy = 0;
 		descricaoText = new JTextField();
-		painelEnviarRequisicao.add(descricaoText, "cell 1 1,growx");
+		painelEnviarRequisicao.add(descricaoText, grid);
 		descricaoText.setColumns(10);
 		
+		grid.gridx = 0;
+		grid.gridy = 1;
 		JLabel lblTipo = new JLabel("Tipo:");
-		painelEnviarRequisicao.add(lblTipo, "cell 0 2,alignx center");
+		painelEnviarRequisicao.add(lblTipo, grid);
 		
+		grid.gridx = 1;
+		grid.gridy = 1;
 		enviarRequisicaoCB = new JComboBox();
 		enviarRequisicaoCB.setModel(new DefaultComboBoxModel(new String[] {"Ajuda", "Manutenção", "Suporte", "Aumento de banda da internet"}));
 		enviarRequisicaoCB.addComponentListener(new ComponentAdapter() {});
 		
-		painelEnviarRequisicao.add(enviarRequisicaoCB, "cell 1 2,growx");
+		painelEnviarRequisicao.add(enviarRequisicaoCB, grid);
 		
+		grid.gridx = 0;
+		grid.gridy = 2;
 		JLabel lblPrazoMximoem = new JLabel("Prazo máximo (em dias):");
-		painelEnviarRequisicao.add(lblPrazoMximoem, "cell 0 3,alignx trailing");
+		painelEnviarRequisicao.add(lblPrazoMximoem, grid);
 		
+		grid.gridx = 1;
+		grid.gridy = 2;
 		prazoText = new JTextField();
-		painelEnviarRequisicao.add(prazoText, "cell 1 3,alignx left");
+		painelEnviarRequisicao.add(prazoText, grid);
 		prazoText.setColumns(10);
 
+		grid.gridx = 1;
+		grid.gridy = 3;
 		JButton btnEnviarRequisicao = new JButton("Enviar");
-		painelEnviarRequisicao.add(btnEnviarRequisicao, "cell 1 4,aligny center");
+		painelEnviarRequisicao.add(btnEnviarRequisicao, grid);
 		btnEnviarRequisicao.addActionListener(new ActionListener() {
 			int codigoTipo = 1;
 			@Override
@@ -195,9 +229,21 @@ public class InterfaceDeCliente extends JFrame {
 			}
 		});
 		
-		contentPane.add(painelEnviarRequisicao, BorderLayout.CENTER);
-		contentPane.setVisible(false);
-		contentPane.setVisible(true);
+		grid.gridx = 1;
+		grid.gridy = 4;
+		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				painelEnviarRequisicao.setVisible(false);
+				painelPrincipal.setVisible(true);
+				
+			}
+		});
+		
+		painelEnviarRequisicao.add(btnSair, grid);
+		
+		this.add(BorderLayout.BEFORE_FIRST_LINE, painelEnviarRequisicao);
 		
 	}
 	
@@ -205,30 +251,50 @@ public class InterfaceDeCliente extends JFrame {
 		
 		
 		painelConsultarRequisicao = new JPanel();
-		painelConsultarRequisicao.setLayout(new MigLayout("", "[70px][grow]", "[15px][]"));
+		painelConsultarRequisicao.setBorder(BorderFactory.createTitledBorder("Consultar requisição"));
+		painelConsultarRequisicao.setLayout(new GridBagLayout());
+		
+		GridBagConstraints grid = new GridBagConstraints();
+		grid.insets = new Insets(4, 4, 4, 4);
+		
+		grid.gridx = 0;
+		grid.gridy = 0;
 		
 		JLabel lblNewLabel_1 = new JLabel("Tipo de consulta");
-		painelConsultarRequisicao.add(lblNewLabel_1, "cell 0 0,alignx trailing,aligny top");
+		painelConsultarRequisicao.add(lblNewLabel_1, grid);
 		
+		grid.gridx = 1;
+		grid.gridy = 0;
 		tipoConsultaCB = new JComboBox();
 		tipoConsultaCB.setModel(new DefaultComboBoxModel(new String[] {"Data", "Tipo de requisição"}));
-		painelConsultarRequisicao.add(tipoConsultaCB, "cell 1 0,growx");
+		painelConsultarRequisicao.add(tipoConsultaCB, grid);
 		
+		grid.gridx = 0;
+		grid.gridy = 1;
 		JLabel data = new JLabel("Data: (se você escolheu por data)");
-		painelConsultarRequisicao.add(data, "cell 0 1,growx");
+		painelConsultarRequisicao.add(data, grid);
 		
-		dataText = new JTextField();
-		painelConsultarRequisicao.add(dataText, "cell 1 1,growx");
+		grid.gridx = 1;
+		grid.gridy = 1;
+		dataText = new JTextField(15);
+		painelConsultarRequisicao.add(dataText, grid);
 		
+		grid.gridx = 0;
+		grid.gridy = 2;
 		JLabel opcao = new JLabel("Tipo: (se você escolheu por tipo)");
-		painelConsultarRequisicao.add(opcao, "cell 0 2,growx");
-		
+		painelConsultarRequisicao.add(opcao, grid);
+
+		grid.gridx = 1;
+		grid.gridy = 2;
 		consultarRequisicaoCB = new JComboBox();
 		consultarRequisicaoCB.setModel(new DefaultComboBoxModel(new String[] {"Ajuda", "Manutenção", "Suporte", "Aumento de banda da Internet"}));
-		painelConsultarRequisicao.add(consultarRequisicaoCB, "cell 1 2,growx");
+		consultarRequisicaoCB.setSize(15, 5);
+		painelConsultarRequisicao.add(consultarRequisicaoCB, grid);
 		
+		grid.gridx = 1;
+		grid.gridy = 3;
 		JButton consultarRequisicao = new JButton("Consultar");
-		painelConsultarRequisicao.add(consultarRequisicao, "cell 1 3,growx");
+		painelConsultarRequisicao.add(consultarRequisicao, grid);
 		consultarRequisicao.addActionListener(new ActionListener() {
 			
 			@Override
@@ -256,30 +322,50 @@ public class InterfaceDeCliente extends JFrame {
 			}
 		});
 		
+		grid.gridx = 1;
+		grid.gridy = 4;
+		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				painelConsultarRequisicao.setVisible(false);
+				painelPrincipal.setVisible(true);
+				
+			}
+		});
 		
-		contentPane.add(painelConsultarRequisicao, BorderLayout.CENTER);
-		contentPane.setVisible(false);
-		contentPane.setVisible(true);
+		painelConsultarRequisicao.add(btnSair, grid);
+		
+		
+		this.add(BorderLayout.BEFORE_FIRST_LINE, painelConsultarRequisicao);
 		
 	}
 	
 	public void painelConsultarUsuario(){
 		
-		usuariosEncontrados = new JTable();
-		
 		painelConsultarUsuario = new JPanel();
-		painelConsultarUsuario.setLayout(new MigLayout("", "[70px][][grow]", "[15px][]"));
+		painelConsultarUsuario.setBorder(BorderFactory.createTitledBorder("Consultar usuario"));
+		painelConsultarUsuario.setLayout(new GridBagLayout());
 		
+		GridBagConstraints grid = new GridBagConstraints();
+		grid.insets = new Insets(4, 4, 4, 4);
+		
+		grid.gridx = 0;
+		grid.gridy = 0;
 		JLabel lblNewLabel_2 = new JLabel("Nome: ");
-		painelConsultarUsuario.add(lblNewLabel_2, "cell 0 0,alignx trailing,aligny top");
+		painelConsultarUsuario.add(lblNewLabel_2, grid);
 		
+		grid.gridx = 1;
+		grid.gridy = 0;
 		nomeConsultaText = new JTextField();
 		nomeConsultaText.setText("");
-		painelConsultarUsuario.add(nomeConsultaText, "cell 1 0,growx");
+		painelConsultarUsuario.add(nomeConsultaText, grid);
 		nomeConsultaText.setColumns(10);
 		
+		grid.gridx = 1;
+		grid.gridy = 1;
 		JButton btnConsultar = new JButton("Consultar");
-		painelConsultarUsuario.add(btnConsultar, "cell 1 1,alignx center");
+		painelConsultarUsuario.add(btnConsultar, grid);
 		btnConsultar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -290,9 +376,21 @@ public class InterfaceDeCliente extends JFrame {
 			}
 		});
 		
-		contentPane.add(painelConsultarUsuario, BorderLayout.CENTER);
-		contentPane.setVisible(false);
-		contentPane.setVisible(true);
+		grid.gridx = 1;
+		grid.gridy = 2;
+		JButton btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				painelConsultarUsuario.setVisible(false);
+				painelPrincipal.setVisible(true);
+				
+			}
+		});
+		
+		painelConsultarUsuario.add(btnSair, grid);
+		
+		this.add(BorderLayout.BEFORE_FIRST_LINE, painelConsultarUsuario);
 		
 	}
 

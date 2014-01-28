@@ -57,6 +57,7 @@ public class InterfaceDeAdministrador extends JFrame {
 	//ComboBoxes
 	private JComboBox tipoRequisicaoCB;
 	private JComboBox tipoDeConsultaRequsicaoCB;
+	private JComboBox tipoRequisicaoConsultarCB;
 
 	//codigoUsuario, usado para identificar o usuário que se logou na primeira interface
 	private static int codigoUsuario;
@@ -750,14 +751,13 @@ public class InterfaceDeAdministrador extends JFrame {
 
 		grid.gridx = 1;
 		grid.gridy = 2;
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Ajuda", "Manutenção", "Suporte", "Aumento de banda da Internet"}));
-		painelConsultarRequisicao.add(comboBox_1, grid);
+		tipoRequisicaoConsultarCB = new JComboBox();
+		tipoRequisicaoConsultarCB.setModel(new DefaultComboBoxModel(new String[] {"Ajuda", "Manutenção", "Suporte", "Aumento de banda da Internet"}));
+		painelConsultarRequisicao.add(tipoRequisicaoConsultarCB, grid);
 
 		grid.gridx = 1;
 		grid.gridy = 3;
 		JButton btnConsultar = new JButton("Consultar");
-		painelConsultarRequisicao.add(btnConsultar, grid);
 		btnConsultar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -773,13 +773,13 @@ public class InterfaceDeAdministrador extends JFrame {
 				} else if (tipoDeConsultaRequsicaoCB.getSelectedItem().equals("Tipo de requisição")){
 					int codigoTipoRequisicao = 1;
 
-					if (tipoRequisicaoCB.getSelectedItem().equals("Ajuda")){
+					if (tipoRequisicaoConsultarCB.getSelectedItem().equals("Ajuda")){
 						codigoTipoRequisicao = 1;
-					} else if (tipoRequisicaoCB.getSelectedItem().equals("Manutenção")){
+					} else if (tipoRequisicaoConsultarCB.getSelectedItem().equals("Manutenção")){
 						codigoTipoRequisicao = 2;
-					} else if (tipoRequisicaoCB.getSelectedItem().equals("Suporte")){
+					} else if (tipoRequisicaoConsultarCB.getSelectedItem().equals("Suporte")){
 						codigoTipoRequisicao = 3;
-					} else if (tipoRequisicaoCB.getSelectedItem().equals("Aumento de banda da Internet")){
+					} else if (tipoRequisicaoConsultarCB.getSelectedItem().equals("Aumento de banda da Internet")){
 						codigoTipoRequisicao = 4;
 					}					
 					
@@ -789,6 +789,8 @@ public class InterfaceDeAdministrador extends JFrame {
 				
 			}
 		});
+		
+		painelConsultarRequisicao.add(btnConsultar, grid);
 		
 		grid.gridx = 1;
 		grid.gridy = 4;
