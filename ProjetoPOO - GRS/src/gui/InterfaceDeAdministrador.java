@@ -305,6 +305,21 @@ public class InterfaceDeAdministrador extends JFrame {
 			}
 		});
 
+		grid.gridx = 1;
+		grid.gridy = 6;
+		JButton botaoVoltarCriarUsr = new JButton("Voltar");
+		botaoVoltarCriarUsr.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				painelCriarUsuario.setVisible(false);
+				painelManterUsuarios();
+			}
+		});
+		
+		painelCriarUsuario.add(botaoVoltarCriarUsr, grid);
+		
 		this.add(BorderLayout.BEFORE_FIRST_LINE, painelCriarUsuario);
 	}
 
@@ -341,6 +356,21 @@ public class InterfaceDeAdministrador extends JFrame {
 
 			}
 		});
+		
+		grid.gridx = 1;
+		grid.gridy = 2;
+		JButton botaoVoltarConsultarUsr = new JButton("Voltar");
+		botaoVoltarConsultarUsr.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				painelConsultarUsuarios.setVisible(false);
+				painelManterUsuarios();
+			}
+		});
+		
+		painelConsultarUsuarios.add(botaoVoltarConsultarUsr, grid);
 
 		this.add(BorderLayout.BEFORE_FIRST_LINE, painelConsultarUsuarios);
 
@@ -401,6 +431,21 @@ public class InterfaceDeAdministrador extends JFrame {
 
 			}
 		});
+		
+		grid.gridx = 2;
+		grid.gridy = 1;
+		JButton botaoVoltarExcluirUsr = new JButton("Voltar");
+		botaoVoltarExcluirUsr.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				painelExcluirUsuario.setVisible(false);
+				painelManterUsuarios();
+			}
+		});
+		
+		painelExcluirUsuario.add(botaoVoltarExcluirUsr, grid);
 
 		this.add(BorderLayout.BEFORE_FIRST_LINE, painelExcluirUsuario);
 
@@ -435,14 +480,14 @@ public class InterfaceDeAdministrador extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (!codigoExcluirText.getText().isEmpty()){
+				if (!codigoAtualizarUsuarioText.getText().isEmpty()){
 					int codigo = Integer.parseInt(codigoAtualizarUsuarioText.getText());
 					InterfaceUsuario.verificaUsuario(codigo);
 				} else {
 					JOptionPane.showMessageDialog(null, "Digite algum código");
 				}
 			}
-		});	
+		});
 
 		grid.gridx = 0;
 		grid.gridy = 1;
@@ -479,6 +524,21 @@ public class InterfaceDeAdministrador extends JFrame {
 
 			}
 		});
+		
+		grid.gridx = 1;
+		grid.gridy = 4;
+		JButton botaoVoltarExcluirUsr = new JButton("Voltar");
+		botaoVoltarExcluirUsr.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				painelAtualizarUsuario.setVisible(false);
+				painelManterUsuarios();
+			}
+		});
+		
+		painelAtualizarUsuario.add(botaoVoltarExcluirUsr, grid);
 
 		this.add(BorderLayout.BEFORE_FIRST_LINE, painelAtualizarUsuario);
 
@@ -524,7 +584,21 @@ public class InterfaceDeAdministrador extends JFrame {
 		});
 		painelManterRequisicao.add(btnConsultarRequisio, grid);
 
-
+		grid.gridx = 2;
+		grid.gridy = 0;
+		JButton botaoVoltarManterReq = new JButton("Voltar");
+		botaoVoltarManterReq.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				painelManterRequisicao.setVisible(false);
+				
+				painelPrincipal.setVisible(true);
+			}
+		});
+		
+		painelManterRequisicao.add(botaoVoltarManterReq, grid);
+		
 		this.add(BorderLayout.BEFORE_FIRST_LINE, painelManterRequisicao);
 
 	}
@@ -602,6 +676,21 @@ public class InterfaceDeAdministrador extends JFrame {
 				}
 				}
 		});
+		
+		grid.gridx = 1;
+		grid.gridy = 4;
+		JButton botaoVoltarEnviarReq = new JButton("Voltar");
+		botaoVoltarEnviarReq.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				painelEnviarRequisicao.setVisible(false);
+				
+				painelManterRequisicao();
+			}
+		});
+		
+		painelEnviarRequisicao.add(botaoVoltarEnviarReq, grid);
 
 		this.add(BorderLayout.BEFORE_FIRST_LINE, painelEnviarRequisicao);
 	}
@@ -678,6 +767,21 @@ public class InterfaceDeAdministrador extends JFrame {
 				
 			}
 		});
+		
+		grid.gridx = 1;
+		grid.gridy = 4;
+		JButton botaoVoltarConsultarReq = new JButton("Voltar");
+		botaoVoltarConsultarReq.addActionListener( new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				painelConsultarRequisicao.setVisible(false);
+				
+				painelManterRequisicao();
+			}
+		});
+		
+		painelConsultarRequisicao.add(botaoVoltarConsultarReq, grid);
 		
 		this.add(BorderLayout.BEFORE_FIRST_LINE, painelConsultarRequisicao);
 
