@@ -26,6 +26,11 @@ public class Requisicao {
 	@ManyToOne
 	private Usuario usuario;
 	
+	private static final int PENDENTE = 1;
+	private static final int ATENDIDA = 2;
+	private Administrador adminRequisicao;
+	private int status;
+	
 	public Requisicao() {
 		
 	}
@@ -38,11 +43,9 @@ public class Requisicao {
 		this.prazo = prazo;
 		this.usuario = usuario;
 		this.data = new Date(Calendar.getInstance().getTimeInMillis());
+		this.status = PENDENTE;
+		
 	}
-	
-//	public String salvarRequisicao() {
-//		return null;
-//	}
 	
 	public int getCodigo() {
 		return codigo;
@@ -82,6 +85,38 @@ public class Requisicao {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+	
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public Administrador getAdminRequisicao() {
+		return adminRequisicao;
+	}
+
+	public void setAdminRequisicao(Administrador adminRequisicao) {
+		this.adminRequisicao = adminRequisicao;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public static int getPendente() {
+		return PENDENTE;
+	}
+
+	public static int getAtendida() {
+		return ATENDIDA;
 	}
 
 	@Override
