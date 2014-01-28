@@ -107,6 +107,37 @@ public abstract class Usuario {
 		return requisicoesString;
 	}
 	
+	public static String consultarRequisicoes(int tipoRequisicao) {
+		List<Requisicao> requisicoes;
+
+		requisicoes = Banco.getInstance().consultarRequisicoes(getTipoRequisicao(tipoRequisicao));
+
+		String requisicoesString = "";
+
+		for (Requisicao r : requisicoes )
+			requisicoesString += r.toString() + "-*-";
+
+		return requisicoesString;
+
+	}
+	
+	public static String verRequisicoes(int status) {
+		List<Requisicao> requisicoes;
+
+		requisicoes = Banco.getInstance().consultarRequisicoes(getTipoRequisicao(status));
+
+		String requisicoesString = "";
+
+		for (Requisicao r : requisicoes )
+			requisicoesString += r.toString() + "-*-";
+
+		return requisicoesString;
+	}
+	
+	public static TipoRequisicao getTipoRequisicao(int codigo) {
+		return TipoRequisicao.values()[codigo-1];
+	}
+	
 	public String toString(){
 		String informacoes = "Código: " + this.codigo +"\nNome: " + this.nome + "\nDepartamento: "+ this.departamento;	
 		return informacoes;

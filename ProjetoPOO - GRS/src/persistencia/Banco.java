@@ -144,4 +144,17 @@ public class Banco {
 		return requisicoes;
 	}
 	
+	public List<Requisicao> consultarRequisicoes(int status) {
+		List<Requisicao> requisicoes = null;
+		
+		try {
+			Query query = manager.createQuery("SELECT r FROM Requisicao r WHERE status = " + status);
+			requisicoes = query.getResultList();
+		} catch (RuntimeException e) {
+			throw new RequisicaoException("Não foi possível consultar requisições a partir do tipo.");
+		}
+		
+		return requisicoes;
+	}
+	
 }

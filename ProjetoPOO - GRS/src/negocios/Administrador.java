@@ -1,5 +1,7 @@
 package negocios;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 
 import persistencia.Banco;
@@ -25,5 +27,7 @@ public class Administrador extends Usuario {
 	public static void excluirUsuario(int codigo) {
 		Banco.getInstance().excluirUsuario(codigo);
 	}
+	
+	
 	
 }
